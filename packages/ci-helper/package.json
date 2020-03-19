@@ -1,0 +1,31 @@
+{
+  "name": "ci-helper",
+  "private": true,
+  "bin": "./bin/ci-helper.sh",
+  "scripts": {
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src"
+  },
+  "dependencies": {
+    "@slack/client": "5.0.2",
+    "commander": "2.20.3",
+    "istanbul": "0.4.5",
+    "serverless-webpack": "5.3.1",
+    "webpack": "4.42.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "2.24.0",
+    "@typescript-eslint/eslint-plugin-tslint": "2.24.0",
+    "@typescript-eslint/parser": "2.24.0",
+    "eslint": "6.8.0",
+    "eslint-config-airbnb": "18.1.0",
+    "eslint-config-prettier": "6.10.0",
+    "eslint-plugin-import": "2.20.1",
+    "eslint-plugin-jsx-a11y": "6.2.3",
+    "eslint-plugin-prettier": "3.1.2",
+    "eslint-plugin-react": "7.19.0",
+    "eslint-plugin-react-hooks": "2.5.0",
+    "prettier": "1.19.1",
+    "tslint": "5.20.1",
+    "typescript": "3.8.3"
+  }
+}
