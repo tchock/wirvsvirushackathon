@@ -2,7 +2,7 @@ function getConfig() {
   switch (process.env.STAGE) {
     case 'prod':
       return {
-          slack: 'tbd',
+        slack: 'tbd',
         buckets: {
           web_app: 'tbd',
         },
