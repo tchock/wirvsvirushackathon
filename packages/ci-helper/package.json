@@ -5,6 +5,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src"
   },
+  "main": "./src/index.js",
   "dependencies": {
     "@slack/client": "5.0.2",
     "commander": "2.20.3",

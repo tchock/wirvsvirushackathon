@@ -1,0 +1,58 @@
+# serverless.yml
+service: api
+
+custom:
+  webpack:
+    includeModules: false # Node modules configuration for packaging
+    packager: 'yarn' # Packager that will be used to package your external modules
+  serverless-offline:
+    port: 4000
+  config: ${file(../../config/${env:STAGE}.yml)}
+
+  # customDomain:
+  #   domainName: ${self:custom.config.DOMAIN_NAME_API}
+  #   certificateArn: ${self:custom.config.ARN_CERTIFICATE}
+  #   createRoute53Record: true
+  #   endpointType: regional
+  #   hostedZoneId: ${self:custom.config.HOSTED_ZONE_ID}
+  #   enabled: true
+
+provider:
+  name: aws
+  apiGateway:
+    minimumCompressionSize: 1024
+  runtime: nodejs12.x
+  timeout: 30
+  stage: ${self:custom.config.SERVERLESS_STAGE}
+  region: ${self:custom.config.SERVERLESS_REGION}
+  environment: ${self:custom.config}
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:BatchGetItem
+        - dynamodb:BatchWriteItem
+      Resource: 'arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.config.DB_TABLE_MAIN}'
+functions:
+  app:
+    handler: src/index.handler
+    events:
+      - http:
+          path: graphql
+          method: post
+          cors: true
+      - http:
+          path: graphql
+          method: get
+          cors: true
+plugins:
+  - serverless-offline
+  - serverless-webpack
+  - serverless-pseudo-parameters
+  - serverless-domain-manager
+  - serverless-export-env
