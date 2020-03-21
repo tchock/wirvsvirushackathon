@@ -1,5 +1,5 @@
 import * as AWS from 'aws-sdk';
-import { Order } from 'types/order';
+import { Order, Audiences } from 'types/order';
 import config from '../../config';
 
 enum DocumentTypes {
@@ -23,30 +23,12 @@ const documentClient: AWS.DynamoDB.DocumentClient = new AWS.DynamoDB.DocumentCli
   endpoint: config.DB_ENDPOINT,
   region: 'us-east-1',
   convertEmptyValues: true,
-})
-
-export async function getOrder(nodeId): Promise<Order> {
-  const orderIdentifier = (new Buffer(nodeId, 'base64')).toString('utf-8');
-
-  const [PK, SK] = orderIdentifier.split('::');
-
-  const params: AWS.DynamoDB.DocumentClient.GetItemInput = {
-    TableName: tableName,
-    Key: {
-      PK,
-      SK,
-    }
-  }
-  const result = await documentClient
-    .get(params)
-    .promise();
-  return result.Item as Order;
-}
+});
 
 export async function saveOrder(order: Order): Promise<Order> {
-  const orderId = (new Buffer(order.nodeId, 'base64')).toString('utf-8');
-  const userId = (new Buffer(order.customer.nodeId, 'base64')).toString('utf-8');
-  const storeId = (new Buffer(order.store.nodeId, 'base64')).toString('utf-8');
+  const orderId = order.nodeId;
+  const userId = order.customer.nodeId;
+  const storeId = order.store.nodeId;
 
   const params: AWS.DynamoDB.DocumentClient.PutItemInput = {
     TableName: tableName,
@@ -63,19 +45,6 @@ export async function saveOrder(order: Order): Promise<Order> {
 
   await documentClient.put(params).promise();
   return order;
-}
-
-export async function getOrderByPickUpCode(pickUpCode) {
-  const params: AWS.DynamoDB.DocumentClient.QueryInput = {
-    TableName: tableName,
-    IndexName: 'index',
-    KeyConditionExpression: 'GSI_PK_2 = :pickUpCode',
-    ExpressionAttributeValues: {
-      ':pickUpCode': pickUpCode,
-    },
-  };
-
-  return await documentClient.query(params).promise();
 }
 
 export async function updateOrder(order: Order): Promise<Order> {
@@ -100,4 +69,119 @@ export async function updateOrder(order: Order): Promise<Order> {
 
   // normally I would do getOrder but I think it's fine here
   return order;
+}
+
+export async function getOrder(
+  nodeId: string,
+  userId: string,
+  userType: Audiences
+): Promise<Order> {
+  switch(userType) {
+    case Audiences.CUSTOMER:
+      return getOrderForCustomer(nodeId, userId);
+    case Audiences.STORE:
+      return getOrderForStore(nodeId, userId);
+  }
+}
+
+export async function getOrders(
+  userId: string,
+  userType: Audiences
+): Promise<Order[]> {
+  switch(userType) {
+    case Audiences.CUSTOMER:
+      return getOrdersForCustomer(userId);
+    case Audiences.STORE:
+      return getOrdersForStore(userId);
+  }
+}
+
+export async function getOrderByPickUpCode(pickUpCode) {
+  const params: AWS.DynamoDB.DocumentClient.QueryInput = {
+    TableName: tableName,
+    IndexName: config.GSI_2_INDEX_NAME,
+    KeyConditionExpression: 'GSI_PK_2 = :pickUpCode',
+    ExpressionAttributeValues: {
+      ':pickUpCode': pickUpCode,
+    },
+  };
+
+  return await documentClient.query(params).promise();
+}
+
+async function getOrderForStore(userId: string, nodeId: string) {
+  const params: AWS.DynamoDB.DocumentClient.GetItemInput = {
+    TableName: tableName,
+    Key: {
+      PK: userId,
+      SK: nodeId,
+    }
+  }
+  const result = await documentClient
+    .get(params)
+    .promise();
+  return result.Item as Order;
+}
+
+async function getOrderForCustomer(
+  nodeId: string,
+  userId: string,
+) {
+  const orders = await queryOrders<Order>(
+    'GSI_PK = :userId and GSI_SK = :nodeId',
+    {
+      ':userId': userId,
+      ':nodeId': nodeId,
+    },
+    config.GSI_INDEX_NAME,
+  );
+
+  return orders[0];
+}
+
+async function getOrdersForCustomer(userId: string) {
+  return queryOrders<Order>(
+    'GSI_PK = :userId',
+    {
+      ':userId': userId,
+    },
+    config.GSI_INDEX_NAME,
+  );
+}
+
+async function getOrdersForStore(userId: string) {
+  return queryOrders<Order>(
+    'PK = :userId',
+    {
+      ':userId': userId,
+    },
+  );
+}
+
+async function queryOrders<T>(
+  keyCondition: string,
+  expression: Record<string, string|number>,
+  index?: string,
+) {
+  const params: AWS.DynamoDB.DocumentClient.QueryInput = {
+    TableName: tableName,
+    KeyConditionExpression: keyCondition,
+    ExpressionAttributeValues: expression
+  }
+
+  if (index) {
+    params.IndexName = index;
+  }
+
+  const result = await documentClient
+    .query(params)
+    .promise();
+
+  const items = result.Items
+
+  if (items.length === 0) {
+    throw new Error('Record not found');
+  }
+
+  return items as T[];
 }

@@ -8,6 +8,8 @@ ARN_DB_UPLOAD_STREAM: "tbd"
 
 DB_TABLE_MAIN: dev-main
 DB_ENDPOINT: "https://dynamodb.us-east-1.amazonaws.com"
+GSI_2_INDEX_NAME: "https://dynamodb.us-east-1.amazonaws.com"
+GSI_INDEX_NAME: "https://dynamodb.us-east-1.amazonaws.com"
 
 DOMAIN_NAME_API: api.dev.tbd.io
 DOMAIN_NAME_WEB_APP: dev.tbd.io
