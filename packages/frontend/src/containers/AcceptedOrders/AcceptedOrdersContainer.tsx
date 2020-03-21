@@ -1,6 +1,5 @@
 import * as React from "react";
-import { OrderSummary } from "../../components/OrderSummary/OrderSummary";
-import { Paper } from "@material-ui/core";
+import { SingleAcceptedOrder } from "./SingleAcceptedOrder/SingleAcceptedOrder";
 
 type Props = {};
 type State = {};
@@ -16,13 +15,21 @@ const SAMPLE_ORDERS = [
 ];
 
 export class AcceptedOrdersContainer extends React.Component<Props, State> {
+  onPaidConfirmed = () => {
+    console.log('paid')
+  };
+
+  onPickedUpConfirmed = () => {
+    console.log('pickedup')
+  };
+
   render() {
-    return (
-      <Paper elevation={0}>
-        {SAMPLE_ORDERS.map(order => (
-          <OrderSummary {...order} />
-        ))}
-      </Paper>
-    );
+    return SAMPLE_ORDERS.map(order => (
+      <SingleAcceptedOrder
+        order={order}
+        onPaidConfirmed={this.onPaidConfirmed}
+        onPickedUpConfirmed={this.onPickedUpConfirmed}
+      />
+    ));
   }
 }
