@@ -13,6 +13,8 @@ export const THEME = createMuiTheme({
   }
 } as Partial<Theme>);
 
+export const getSpacing = (value: number) => (props) => props.theme.spacing(value);
+
 export type ThemeConfig = typeof THEME;
 
 export const GlobalStyle = createGlobalStyle<{ theme: ThemeConfig }>`
