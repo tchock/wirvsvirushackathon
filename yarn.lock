@@ -3197,6 +3197,7 @@ __metadata:
     serverless-webpack: ^5.3.1
     source-map-loader: 0.2.4
     tslint: 5.20.1
+    types: "workspace:packages/types"
     typescript: ^3.8.3
     webpack: 4.42.0
     webpack-graphql-loader: 0.1.2
