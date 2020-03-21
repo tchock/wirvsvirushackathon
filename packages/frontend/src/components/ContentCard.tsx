@@ -6,7 +6,7 @@ export function ContentCard({ children }) {
   return (
     <Box m={1} mb={2}>
       <Paper>
-        <Box p={2}>{children}</Box>
+        <Box p={2.5}>{children}</Box>
       </Paper>
     </Box>
   );
