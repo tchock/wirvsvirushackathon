@@ -25,7 +25,7 @@ const documentClient: AWS.DynamoDB.DocumentClient = new AWS.DynamoDB.DocumentCli
   convertEmptyValues: true,
 });
 
-export async function saveOrder(order: Order): Promise<Order> {
+export async function upsertOrder(order: Order): Promise<Order> {
   const orderId = order.nodeId;
   const userId = order.customer.nodeId;
   const storeId = order.store.nodeId;
@@ -33,41 +33,17 @@ export async function saveOrder(order: Order): Promise<Order> {
   const params: AWS.DynamoDB.DocumentClient.PutItemInput = {
     TableName: tableName,
     Item: {
-      PK: storeId,
-      SK: orderId,
-      GSI_PK: userId,
-      GSI_SK: orderId,
-      GSI_PK_2: order.pickUpCode,
+      PK: `storeId_${storeId}`,
+      SK: `orderId_${orderId}`,
+      GSI_PK: `userId_${userId}`,
+      GSI_SK: `orderId_${orderId}`,
+      GSI_PK_2: `pickUpCode_${order.pickUpCode}`,
       ItemType: DocumentTypes.ORDER,
       payload: order,
     } as Document<Order>
   }
 
   await documentClient.put(params).promise();
-  return order;
-}
-
-export async function updateOrder(order: Order): Promise<Order> {
-  const orderId = (new Buffer(order.nodeId, 'base64')).toString('utf-8');
-  const userId = (new Buffer(order.customer.nodeId, 'base64')).toString('utf-8');
-  const storeId = (new Buffer(order.store.nodeId, 'base64')).toString('utf-8');
-
-  const params: AWS.DynamoDB.DocumentClient.PutItemInput = {
-    TableName: tableName,
-    Item: {
-      PK: storeId,
-      SK: orderId,
-      GSI_PK: userId,
-      GSI_SK: orderId,
-      GSI_PK_2: order.pickUpCode,
-      ItemType: DocumentTypes.ORDER,
-      payload: order,
-    } as Document<Order>
-  };
-
-  await documentClient.put(params).promise();
-
-  // normally I would do getOrder but I think it's fine here
   return order;
 }
 
@@ -102,7 +78,7 @@ export async function getOrderByPickUpCode(pickUpCode) {
     IndexName: config.GSI_2_INDEX_NAME,
     KeyConditionExpression: 'GSI_PK_2 = :pickUpCode',
     ExpressionAttributeValues: {
-      ':pickUpCode': pickUpCode,
+      ':pickUpCode': `pickUpCode_${pickUpCode}`,
     },
   };
 
@@ -130,32 +106,32 @@ async function getOrderForCustomer(
   const orders = await queryOrders<Order>(
     'GSI_PK = :userId and GSI_SK = :nodeId',
     {
-      ':userId': userId,
-      ':nodeId': nodeId,
+      ':userId': `userId_${userId}`,
+      ':nodeId': `orderId_${nodeId}`,
     },
     config.GSI_INDEX_NAME,
   );
 
-  return orders[0];
+  return orders[0].payload;
 }
 
 async function getOrdersForCustomer(userId: string) {
-  return queryOrders<Order>(
+  return (await queryOrders<Order>(
     'GSI_PK = :userId',
     {
-      ':userId': userId,
+      ':userId': `userId_${userId}`,
     },
     config.GSI_INDEX_NAME,
-  );
+  )).map(orderDocument => orderDocument.payload);
 }
 
 async function getOrdersForStore(userId: string) {
-  return queryOrders<Order>(
+  return (await queryOrders<Order>(
     'PK = :userId',
     {
-      ':userId': userId,
+      ':userId': `userId_${userId}`,
     },
-  );
+  )).map(orderDocument => orderDocument.payload);
 }
 
 async function queryOrders<T>(
@@ -183,5 +159,5 @@ async function queryOrders<T>(
     throw new Error('Record not found');
   }
 
-  return items as T[];
+  return items as Document<T>[];
 }
