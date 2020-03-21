@@ -3,5 +3,5 @@ import styled from "styled-components";
 import { getSpacing } from "../../theme";
 
 export const TopNavigation = styled.div`
-  padding-bottom: ${getSpacing(2)};
+  padding-bottom: ${getSpacing(2)}px;
 `;

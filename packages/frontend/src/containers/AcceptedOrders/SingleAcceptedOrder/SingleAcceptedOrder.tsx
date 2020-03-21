@@ -1,9 +1,10 @@
 import * as React from "react";
 import { Button, Grid } from "@material-ui/core";
 import { OrderSummaryWithActions } from "../../../hoc/OrderSummaryWithActions";
+import { Order } from '../../../../../types/order';
 
 type Props = {
-  order: any;
+  order: Order;
   onPaidConfirmed: () => void;
   onPickedUpConfirmed: () => void;
 };
