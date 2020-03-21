@@ -1,4 +1,4 @@
-import { OrderList, Order } from '../../../types/order';
+import { OrderList, Order } from 'types/order';
 
 async function orders(_root, _args, _context: any): Promise<OrderList> {
   return Promise.resolve([] as any);
