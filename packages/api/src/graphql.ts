@@ -3,9 +3,9 @@ import { makeExecutableSchema } from "apollo-server-lambda"
 const typeDef = /* GraphQL */ `
 type Query {
   orders(audience: Audiences!): OrderList
-	order(
-		nodeId: String!
-	): Order
+  order(
+    nodeId: String!
+  ): Order
 }
 
 type Mutation {
@@ -73,6 +73,10 @@ type Bundle implements Node {
   items: ItemList!
 }
 
+type BundleInput {
+  items: ItemList!
+}
+
 type ItemList {
   # edges: [ItemEdge]!
   nodes: [Item]!
@@ -95,11 +99,11 @@ interface User {
   type: Audiences!
 }
 
-type Store implements Node, User {
+type Store implements Node & User {
 	nodeId: String!
 }
 
-type Customer implements Node, User {
+type Customer implements Node & User {
 	nodeId: String!
 }
 `
