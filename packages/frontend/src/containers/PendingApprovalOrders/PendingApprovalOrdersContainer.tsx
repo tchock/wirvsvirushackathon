@@ -1,18 +1,13 @@
-import * as React from 'react';
+import * as React from "react";
 
-type Props = {
+type Props = {};
+type State = {};
 
-};
-type State = {
-
-};
-
-export class PendingApprovalOrdersContainer extends React.Component<Props, State> {
+export class PendingApprovalOrdersContainer extends React.Component<
+  Props,
+  State
+> {
   render() {
-    return (
-      <div>
-
-      </div>
-    );
-  };
-};
+    return <div>Pending</div>;
+  }
+}
