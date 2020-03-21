@@ -1,0 +1,7 @@
+version: '2'
+services:
+  dynamodb:
+    image: deangiberson/aws-dynamodb-local
+    container_name: coronator-main
+    ports:
+      - "8000:8000"

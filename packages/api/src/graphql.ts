@@ -3,9 +3,9 @@ import { makeExecutableSchema } from "apollo-server-lambda"
 const typeDef = /* GraphQL */ `
 type Query {
   orders(audience: Audiences!): OrderList
-	order(
-		nodeId: String!
-	): Order
+  order(
+    nodeId: String!
+  ): Order
 }
 
 type Mutation {
@@ -27,21 +27,21 @@ enum OrderStatus {
 }
 
 interface Node {
-  nodeId # base64 PK::SK
+  nodeId: String! # base64 PK::SK
 }
 
 type OrderList {
   # edges: [OrderEdge]!
-	nodes: [Order]!
+  nodes: [Order]!
 }
 
 # type OrderEdge {
-# 	cursor: String!
+#   cursor: String!
 #   node: Order!
 # }
 
 type Order implements Node {
-	nodeId: String!
+  nodeId: String!
   pickUpCode: String!
   confirmedPickUpTime: String # ISO8601
   requestedPickUpTime: String # ISO8601
@@ -64,12 +64,16 @@ type BundleList {
 }
 
 # type BundleEdge {
-# 	cursor: String!
+#   cursor: String!
 #   node: Bundle!
 # }
 
 type Bundle implements Node {
   nodeId: String! # NOT any PK + SK
+  items: ItemList!
+}
+
+type BundleInput {
   items: ItemList!
 }
 
@@ -79,7 +83,7 @@ type ItemList {
 }
 
 # type ItemEdge {
-# 	cursor: String!
+#   cursor: String!
 #   node: Item!
 # }
 
@@ -95,12 +99,14 @@ interface User {
   type: Audiences!
 }
 
-type Store implements Node, User {
-	nodeId: String!
+type Store implements Node & User {
+  nodeId: String!
+  type: STORE
 }
 
-type Customer implements Node, User {
-	nodeId: String!
+type Customer implements Node & User {
+  nodeId: String!
+  type: CUSTOMER
 }
 `
 

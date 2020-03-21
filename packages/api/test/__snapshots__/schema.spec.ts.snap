@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`exported schema 1`] = `
+"enum Audiences {
+  CUSTOMER
+  STORE
+}
+
+type Bundle implements Node {
+  nodeId: String!
+  items: ItemList!
+}
+
+type BundleInput {
+  items: ItemList!
+}
+
+type BundleList {
+  \\"\\"\\"edges: [BundleEdge]!\\"\\"\\"
+  nodes: [Bundle]!
+}
+
+type Customer implements Node & User {
+  nodeId: String!
+}
+
+type Item {
+  nodeId: String!
+  quantity: Float!
+  price: Float!
+  name: String!
+  unit: String!
+}
+
+type ItemList {
+  \\"\\"\\"edges: [ItemEdge]!\\"\\"\\"
+  nodes: [Item]!
+}
+
+type Mutation {
+  orderPickUp(pickUpCode: String!): Order
+  orderDecline(nodeId: String!): Order
+  orderAccept(nodeId: String!): Order
+  orderPlace(order: OrderInput): Order
+}
+
+interface Node {
+  nodeId: String!
+}
+
+type Order implements Node {
+  nodeId: String!
+  pickUpCode: String!
+  confirmedPickUpTime: String
+  requestedPickUpTime: String
+  store: Store!
+  customer: Customer!
+  orderStatus: OrderStatus!
+  bundles: BundleList!
+  shareLink: String!
+}
+
+type OrderInput {
+  bundles: [BundleInput!]!
+  store: String!
+  requestedPickUpTime: String
+}
+
+type OrderList {
+  \\"\\"\\"edges: [OrderEdge]!\\"\\"\\"
+  nodes: [Order]!
+}
+
+enum OrderStatus {
+  ACCEPTED
+  REJECTED
+  PICKED_UP
+}
+
+type Query {
+  orders(audience: Audiences!): OrderList
+  order(nodeId: String!): Order
+}
+
+type Store implements Node & User {
+  nodeId: String!
+}
+
+interface User {
+  type: Audiences!
+}
+"
+`;
