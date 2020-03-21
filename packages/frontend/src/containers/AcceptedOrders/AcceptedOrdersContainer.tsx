@@ -2,8 +2,7 @@ import * as React from "react";
 import { SingleAcceptedOrder } from "./SingleAcceptedOrder/SingleAcceptedOrder";
 import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
-import styled from "styled-components";
-import { getSpacing } from "../../theme";
+import { TopNavigation } from "../../components/TopAdminNavigation/TopAdminNavigation";
 
 type Props = {};
 type State = {};
@@ -18,10 +17,6 @@ const SAMPLE_ORDERS = [
   }
 ];
 
-const TopNavigation = styled.div`
-  padding-bottom: ${getSpacing(2)};
-`;
-
 export class AcceptedOrdersContainer extends React.Component<Props, State> {
   onPaidConfirmed = () => {
     console.log("paid");
@@ -32,25 +27,27 @@ export class AcceptedOrdersContainer extends React.Component<Props, State> {
   };
 
   render() {
-    return SAMPLE_ORDERS.map(order => (
+    return (
       <>
         <TopNavigation>
           <Link
             to="/admin/pending"
             component={Button}
-            fullWidth
+            fullWidth={true}
             variant="contained"
-            color="secondary"
+            color="default"
           >
             Pending Approval Orders
           </Link>
         </TopNavigation>
-        <SingleAcceptedOrder
-          order={order}
-          onPaidConfirmed={this.onPaidConfirmed}
-          onPickedUpConfirmed={this.onPickedUpConfirmed}
-        />
+        {SAMPLE_ORDERS.map(order => (
+          <SingleAcceptedOrder
+            order={order}
+            onPaidConfirmed={this.onPaidConfirmed}
+            onPickedUpConfirmed={this.onPickedUpConfirmed}
+          />
+        ))}
       </>
-    ));
+    );
   }
 }
