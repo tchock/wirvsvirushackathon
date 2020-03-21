@@ -8,3 +8,5 @@
 node_modules
 
 ignore.*
+.serverless
+.webpack

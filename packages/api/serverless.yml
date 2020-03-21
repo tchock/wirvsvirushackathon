@@ -54,7 +54,7 @@ plugins:
   - serverless-offline
   - serverless-webpack
   - serverless-pseudo-parameters
-  - serverless-domain-manager
+  # - serverless-domain-manager
   - serverless-export-env
 
 resources:
