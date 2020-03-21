@@ -27,7 +27,7 @@ enum OrderStatus {
 }
 
 interface Node {
-  nodeId # base64 PK::SK
+  nodeId: String! # base64 PK::SK
 }
 
 type OrderList {
