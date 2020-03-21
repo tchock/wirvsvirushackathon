@@ -101,10 +101,12 @@ interface User {
 
 type Store implements Node & User {
 	nodeId: String!
+  type: STORE
 }
 
 type Customer implements Node & User {
 	nodeId: String!
+  type: CUSTOMER
 }
 `
 
