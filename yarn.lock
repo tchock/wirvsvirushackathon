@@ -2458,6 +2458,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/qrcode.react@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@types/qrcode.react@npm:1.0.0"
+  dependencies:
+    "@types/react": "*"
+  checksum: 2/f2605dcac9f5c047c923cb50f5b1ffcf297568f5559d8a07ec2e838b61f722a6571a42f38595bc9ae233f024d200fd7428ab3eeb65a18be093773a4cb247a611
+  languageName: node
+  linkType: hard
+
 "@types/range-parser@npm:*":
   version: 1.2.3
   resolution: "@types/range-parser@npm:1.2.3"
@@ -7456,6 +7465,7 @@ __metadata:
     "@material-ui/icons": ^4.9.1
     "@material-ui/styles": ^4.9.6
     "@material-ui/system": ^4.9.6
+    "@types/qrcode.react": 1.0.0
     "@types/react": 16.9.23
     "@types/react-dom": 16.9.5
     "@types/react-router": 5.1.4
@@ -7485,6 +7495,7 @@ __metadata:
     postcss-flexbugs-fixes: 3.3.1
     postcss-loader: 2.1.6
     prettier: 1.19.1
+    qrcode.react: ^1.0.0
     raf: 3.4.1
     raw-loader: 0.5.1
     react: ^16.13.0
@@ -12217,7 +12228,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
+"prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
   version: 15.7.2
   resolution: "prop-types@npm:15.7.2"
   dependencies:
@@ -12338,6 +12349,26 @@ fsevents@~2.1.2:
   dependencies:
     escape-goat: ^2.0.0
   checksum: 2/d03edb9fd7d707e54618711896ab4a96c80fcfb380e413a9130157dc08a3553bf62fa7c7407edbba57095d4ba993df6de4f28a56dd5eca93b5dccbe1fc4a82db
+  languageName: node
+  linkType: hard
+
+"qr.js@npm:0.0.0":
+  version: 0.0.0
+  resolution: "qr.js@npm:0.0.0"
+  checksum: 2/83e1d6140ec8781d0def39a70d7ef9e7a7ff455697d8e078b86aeeb773dd33fd5235d4f94710b871fc3cfdefb806165503b8241cd4cd9b18a4b9b4160f48db43
+  languageName: node
+  linkType: hard
+
+"qrcode.react@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "qrcode.react@npm:1.0.0"
+  dependencies:
+    loose-envify: ^1.4.0
+    prop-types: ^15.6.0
+    qr.js: 0.0.0
+  peerDependencies:
+    react: ^15.5.3 || ^16.0.0
+  checksum: 2/cb0d10f126d3080a6e640f46075aff567ade4c39ed5b74ece13361227f04fda8c3237090fff81d9bfbdfc5f5b60220d763a44b1cc6c7cc35b406ad08c6fcafed
   languageName: node
   linkType: hard
 
