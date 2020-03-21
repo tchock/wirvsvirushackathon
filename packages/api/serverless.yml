@@ -88,7 +88,7 @@ resources:
             KeyType: "RANGE"
         GlobalSecondaryIndexes:
           -
-            IndexName: "gsi-pk-gsi-sk-index"
+            IndexName: "${self:custom.config.GSI_INDEX_NAME}"
             Projection:
               ProjectionType: ALL
             KeySchema:
@@ -99,7 +99,7 @@ resources:
                 AttributeName: "GSI_SK"
                 KeyType: "RANGE"
           -
-            IndexName: "gsi-pk-2-index"
+            IndexName: "${self:custom.config.GSI_2_INDEX_NAME}"
             Projection:
               ProjectionType: ALL
             KeySchema:
