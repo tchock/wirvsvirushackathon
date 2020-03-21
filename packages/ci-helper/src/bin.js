@@ -1,5 +1,5 @@
 const program = require('commander');
-const { deploy, build, combineCoverage } = require('./commands');
+const { deploy, build } = require('./commands');
 
 const DESCRIPTION = `
   Internal helper tool for continuos integration and deployment. 
@@ -20,7 +20,6 @@ module.exports = function bin() {
 
   deploy(program);
   build(program);
-  combineCoverage(program);
 
   program.parse(process.argv);
 };
