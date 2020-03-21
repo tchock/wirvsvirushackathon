@@ -1,4 +1,6 @@
 import { makeExecutableSchema } from "apollo-server-lambda"
+import { asPaginationResolver } from "./pagination"
+import Order from "../Orders"
 
 const typeDef = /* GraphQL */ `
 type Query {
@@ -96,23 +98,23 @@ interface User {
 }
 
 type Store implements Node, User {
-	nodeId: String!
+  nodeId: String!
 }
 
 type Customer implements Node, User {
-	nodeId: String!
+  nodeId: String!
 }
 `
 
 const resolvers = {
 
-  // Query: {
-  //   orders:  async (root, args, context) => {}
-  // },
+  Query: {
+    orders:  asPaginationResolver(Order.orders)
+  },
 
-  // Order: {
-  //   nodeId: nodeIdResovler
-  // }
+  Order: {
+    // nodeId: nodeIdResovler TODO
+  }
 
 }
 
