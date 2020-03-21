@@ -1,133 +1,130 @@
-import { makeExecutableSchema } from "apollo-server-lambda"
-import { asPaginationResolver } from "./pagination"
-import Order from "../Orders"
+import { makeExecutableSchema } from 'apollo-server-lambda';
+import { asPaginationResolver } from './pagination';
+import Order from '../Orders';
+import NodeId from './nodeId';
 
 const typeDef = /* GraphQL */ `
-type Query {
-  orders(audience: Audiences!): OrderList
-  order(
-    nodeId: String!
-  ): Order
-}
+  type Query {
+    orders(audience: Audiences!): OrderList
+    order(nodeId: NodeId!): Order
+  }
 
-type Mutation {
-  orderPickUp(pickUpCode: String!): Order # order status -> PICKED_UP
-  orderDecline(nodeId: String!): Order # order status -> REJECTED
-  orderAccept(nodeId: String!): Order # order status -> ACCEPTED
-  orderPlace(order: OrderInput): Order # creates order
-}
+  type Mutation {
+    orderPickUp(pickUpCode: String!): Order # order status -> PICKED_UP (by foreign user)
+    orderDecline(nodeId: NodeId!): Order # order status -> REJECTED (by store owner)
+    orderAccept(nodeId: NodeId!): Order # order status -> ACCEPTED (by store owner)
+    orderPlace(order: OrderInput): Order # creates order (by customer)
+  }
 
-enum Audiences {
-  CUSTOMER
-  STORE
-}
+  enum Audiences {
+    CUSTOMER
+    STORE
+  }
 
-enum OrderStatus {
-  ACCEPTED
-  REJECTED
-  PICKED_UP
-}
+  enum OrderStatus {
+    ACCEPTED
+    REJECTED
+    PICKED_UP
+  }
 
-interface Node {
-  nodeId: String! # base64 PK::SK
-}
+  interface Node {
+    nodeId: NodeId! # base64 PK::SK
+  }
 
-type OrderList {
-  # edges: [OrderEdge]!
-  nodes: [Order]!
-}
+  type OrderList {
+    # edges: [OrderEdge]!
+    nodes: [Order]!
+  }
 
-# type OrderEdge {
-#   cursor: String!
-#   node: Order!
-# }
+  # type OrderEdge {
+  #   cursor: String!
+  #   node: Order!
+  # }
 
-type Order implements Node {
-  nodeId: String!
-  pickUpCode: String!
-  confirmedPickUpTime: String # ISO8601
-  requestedPickUpTime: String # ISO8601
-  store: Store!
-  customer: Customer!
-  orderStatus: OrderStatus!
-  bundles: BundleList!
-  shareLink: String!
-}
+  type Order implements Node {
+    nodeId: NodeId!
+    pickUpCode: String!
+    confirmedPickUpTime: String # ISO8601
+    requestedPickUpTime: String # ISO8601
+    store: Store!
+    customer: Customer!
+    orderStatus: OrderStatus!
+    bundles: BundleList!
+    shareLink: String!
+  }
 
-input OrderInput {
-  bundles: [BundleInput!]!
-  store: String! # Store nodeId
-  requestedPickUpTime: String # ISO8601
-}
+  input OrderInput {
+    bundles: [BundleInput!]!
+    store: String! # Store nodeId
+    requestedPickUpTime: String # ISO8601
+  }
 
-type BundleList {
-  # edges: [BundleEdge]!
-  nodes: [Bundle]!
-}
+  type BundleList {
+    # edges: [BundleEdge]!
+    nodes: [Bundle]!
+  }
 
-# type BundleEdge {
-#   cursor: String!
-#   node: Bundle!
-# }
+  # type BundleEdge {
+  #   cursor: String!
+  #   node: Bundle!
+  # }
 
-type Bundle implements Node {
-  nodeId: String! # NOT any PK + SK
-  items: BundleItemList!
-}
+  type Bundle implements Node {
+    nodeId: NodeId! # NOT any PK + SK
+    items: BundleItemList!
+  }
 
-input BundleInput {
-  items: BundleItemInput!
-}
+  input BundleInput {
+    items: BundleItemInput!
+  }
 
-type BundleItemList {
-  # edges: [BundleItemEdge]!
-  nodes: [BundleItem]!
-}
+  type BundleItemList {
+    # edges: [BundleItemEdge]!
+    nodes: [BundleItem]!
+  }
 
-# type BundleItemEdge {
-#   cursor: String!
-#   node: BundleItem!
-# }
+  # type BundleItemEdge {
+  #   cursor: String!
+  #   node: BundleItem!
+  # }
 
-type BundleItem {
-  nodeId: String! # NOT any PK + SK
-  quantity: Float!
-  price: Float!
-  name: String!
-  unit: String!
-}
+  type BundleItem {
+    nodeId: NodeId! # NOT any PK + SK
+    quantity: Float!
+    price: Float!
+    name: String!
+    unit: String!
+  }
 
-input BundleItemInput {
-  nodeId: String!
-  quantity: Float!
-}
+  input BundleItemInput {
+    nodeId: NodeId!
+    quantity: Float!
+  }
 
-interface User {
-  type: Audiences!
-}
+  interface User {
+    type: Audiences!
+  }
 
-type Store implements Node & User {
-  nodeId: String!
-  type: Audiences!
-}
+  type Store implements Node & User {
+    nodeId: NodeId!
+    type: Audiences!
+  }
 
-type Customer implements Node & User {  
-  nodeId: String!
-  type: Audiences!
-}
-`
+  type Customer implements Node & User {
+    nodeId: NodeId!
+    type: Audiences!
+  }
+
+  scalar NodeId
+`;
 
 const resolvers = {
-
   Query: {
-    orders:  asPaginationResolver(Order.orders),
+    orders: asPaginationResolver(Order.orders),
     order: Order.order,
   },
 
-  Order: {
-    // nodeId: nodeIdResovler TODO
-  }
+  NodeId,
+};
 
-}
-
-export const schema = makeExecutableSchema({ typeDefs: [typeDef], resolvers })
+export const schema = makeExecutableSchema({ typeDefs: [typeDef], resolvers });
