@@ -5,8 +5,8 @@ import NodeId from './nodeId';
 
 const typeDef = /* GraphQL */ `
   type Query {
-    orders(audience: Audiences!): OrderList
-    order(nodeId: NodeId!): Order
+    orders(audience: Audiences!, orderStatus: OrderStatus): OrderList
+    order(audience: Audiences!, nodeId: NodeId!): Order
   }
 
   type Mutation {
