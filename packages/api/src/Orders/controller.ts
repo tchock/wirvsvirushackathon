@@ -2,7 +2,6 @@ import { OrderList, Order, OrderStatus } from 'types/order';
 import { getOrderByNodeId } from './mockData';
 
 export async function orders(_root, _args, _context: any): Promise<OrderList> {
-  console.log("FUCKING ORDERS")
   return Promise.resolve([] as any);
 }
 
@@ -27,5 +26,3 @@ export async function orderAccept(_root, _args, _context: any): Promise<Order> {
 export async function orderPlace(_root, _args, _context: any): Promise<Order> {
   return Promise.resolve({} as any);
 }
-
-console.log("PENOS")
