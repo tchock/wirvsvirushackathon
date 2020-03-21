@@ -34,16 +34,16 @@ interface Node {
 
 type OrderList {
   # edges: [OrderEdge]!
-	nodes: [Order]!
+  nodes: [Order]!
 }
 
 # type OrderEdge {
-# 	cursor: String!
+#   cursor: String!
 #   node: Order!
 # }
 
 type Order implements Node {
-	nodeId: String!
+  nodeId: String!
   pickUpCode: String!
   confirmedPickUpTime: String # ISO8601
   requestedPickUpTime: String # ISO8601
@@ -66,7 +66,7 @@ type BundleList {
 }
 
 # type BundleEdge {
-# 	cursor: String!
+#   cursor: String!
 #   node: Bundle!
 # }
 
@@ -85,7 +85,7 @@ type BundleItemList {
 }
 
 # type BundleItemEdge {
-# 	cursor: String!
+#   cursor: String!
 #   node: BundleItem!
 # }
 
@@ -107,12 +107,12 @@ interface User {
 }
 
 type Store implements Node & User {
-	nodeId: String!
+  nodeId: String!
   type: Audiences!
 }
 
-type Customer implements Node & User {
-	nodeId: String!
+type Customer implements Node & User {  
+  nodeId: String!
   type: Audiences!
 }
 `
