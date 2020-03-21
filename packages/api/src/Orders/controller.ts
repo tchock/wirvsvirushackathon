@@ -1,13 +1,12 @@
-import { OrderList, Order, OrderStatus } from 'types/order';
-import { getOrderByNodeId } from './mockData';
+import { Order, OrderStatus } from 'types/order';
+import { getOrderByNodeId, getOrders } from './mockData';
 
-export async function orders(_root, _args, _context: any): Promise<OrderList> {
-  return Promise.resolve([] as any);
+export async function orders(_root, _args, _context: any): Promise<Order[]> {
+  return getOrders();
 }
 
 export async function order (_root, args, _context: any): Promise<Order> {
   const nodeId: string = args.nodeId;
-
   return getOrderByNodeId(nodeId)
 }
 

@@ -120,7 +120,8 @@ type Customer implements Node & User {
 const resolvers = {
 
   Query: {
-    orders:  asPaginationResolver(Order.orders)
+    orders:  asPaginationResolver(Order.orders),
+    order: Order.order,
   },
 
   Order: {
