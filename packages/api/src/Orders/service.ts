@@ -1,13 +1,23 @@
 // import * as repository from './repository';
 import * as mocks from './mockData';
-import { Order } from 'types/order';
+import { Order, OrderStatus, Audiences } from 'types/order';
 
-export async function getOrderByNodeId(nodeId: string) {
-  return toOrder(await mocks.getOrderByNodeId(nodeId));
+export type getOrderInput = {
+  nodeId: string;
+  audience: Audiences;
+};
+
+export type getOrdersInput = {
+  orderStatus?: OrderStatus;
+  audience: Audiences;
+};
+
+export async function getOrderByNodeId(args: getOrderInput) {
+  return toOrder(await mocks.getOrderByNodeId(args));
 }
 
-export async function getOrders() {
-  return (await mocks.getOrders()).map(toOrder);
+export async function getOrders(args: getOrdersInput) {
+  return (await mocks.getOrders(args)).map(toOrder);
 }
 
 function toOrder(dbOrder): Order {

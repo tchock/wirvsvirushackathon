@@ -106,11 +106,14 @@ export async function getOrderMocks() {
   ];
 }
 
-export async function getOrders() {
-  // TODO add audience and order status filter
-  return getOrderMocks();
+export async function getOrders(args) {
+  const orders = await getOrderMocks();
+  if (args.orderStatus) {
+    return orders.filter(order => order.orderStatus === args.orderStatus);
+  }
+  return orders;
 }
 
-export async function getOrderByNodeId(SK: string) {
-  return (await getOrderMocks()).find(order => order.SK === SK);
+export async function getOrderByNodeId(args) {
+  return (await getOrderMocks()).find(order => order.SK === args.nodeId);
 }
