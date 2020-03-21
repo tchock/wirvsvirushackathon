@@ -7,12 +7,30 @@ exports[`exported schema 1`] = `
 }
 
 type Bundle implements Node {
-  nodeId: String!
-  items: ItemList!
+  nodeId: NodeId!
+  items: BundleItemList!
 }
 
-type BundleInput {
-  items: ItemList!
+input BundleInput {
+  items: BundleItemInput!
+}
+
+type BundleItem {
+  nodeId: NodeId!
+  quantity: Float!
+  price: Float!
+  name: String!
+  unit: String!
+}
+
+input BundleItemInput {
+  nodeId: NodeId!
+  quantity: Float!
+}
+
+type BundleItemList {
+  \\"\\"\\"edges: [BundleItemEdge]!\\"\\"\\"
+  nodes: [BundleItem]!
 }
 
 type BundleList {
@@ -21,35 +39,26 @@ type BundleList {
 }
 
 type Customer implements Node & User {
-  nodeId: String!
-}
-
-type Item {
-  nodeId: String!
-  quantity: Float!
-  price: Float!
-  name: String!
-  unit: String!
-}
-
-type ItemList {
-  \\"\\"\\"edges: [ItemEdge]!\\"\\"\\"
-  nodes: [Item]!
+  nodeId: NodeId!
+  type: Audiences!
 }
 
 type Mutation {
   orderPickUp(pickUpCode: String!): Order
-  orderDecline(nodeId: String!): Order
-  orderAccept(nodeId: String!): Order
+  orderDecline(nodeId: NodeId!): Order
+  orderAccept(nodeId: NodeId!): Order
   orderPlace(order: OrderInput): Order
 }
 
 interface Node {
-  nodeId: String!
+  nodeId: NodeId!
 }
 
+\\"\\"\\"serializes and deserialized nodeIds\\"\\"\\"
+scalar NodeId
+
 type Order implements Node {
-  nodeId: String!
+  nodeId: NodeId!
   pickUpCode: String!
   confirmedPickUpTime: String
   requestedPickUpTime: String
@@ -60,7 +69,7 @@ type Order implements Node {
   shareLink: String!
 }
 
-type OrderInput {
+input OrderInput {
   bundles: [BundleInput!]!
   store: String!
   requestedPickUpTime: String
@@ -78,12 +87,13 @@ enum OrderStatus {
 }
 
 type Query {
-  orders(audience: Audiences!): OrderList
-  order(nodeId: String!): Order
+  orders(audience: Audiences!, orderStatus: OrderStatus): OrderList
+  order(audience: Audiences!, nodeId: NodeId!): Order
 }
 
 type Store implements Node & User {
-  nodeId: String!
+  nodeId: NodeId!
+  type: Audiences!
 }
 
 interface User {

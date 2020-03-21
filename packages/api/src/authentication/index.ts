@@ -23,8 +23,24 @@ async function authenticateHeader(header) {
   }
 }
 
+function fakeAuth() {
+  return {
+    user: {
+      iss: 'https://outofthebox.eu.auth0.com/',
+      sub: 'github|38959977',
+      aud: ['api.outofthebox.com', 'https://outofthebox.eu.auth0.com/userinfo'],
+      iat: 1579344887,
+      exp: 1579352087,
+      azp: 'wiBC7LZCn4zmRVq5zEIMVuC9xkA9vRYJ',
+      scope: 'openid profile',
+      permissions: ['access'],
+    },
+  };
+}
+
 async function lambdaMiddleware({ event: { headers } }) {
-  return authenticateHeader(headers.Authorization || headers.authorization);
+  return fakeAuth();
+  // return authenticateHeader(headers.Authorization || headers.authorization);
 }
 
 async function httpMiddleware(req) {

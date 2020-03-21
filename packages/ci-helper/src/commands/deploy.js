@@ -1,7 +1,6 @@
 const { buckets } = require('../config');
 
 const { deploy: deployToBucket } = require('../targets/bucket');
-const notify = require('../slackNotifications');
 
 const DESCRIPTION = `
 deploys an app based on the given <kind> and <name>.
@@ -46,6 +45,5 @@ module.exports = program => {
         default:
           break;
       }
-      await notify.deployed();
     });
 };

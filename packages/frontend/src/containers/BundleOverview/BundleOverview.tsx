@@ -10,49 +10,50 @@ import ItemsIcon from "@material-ui/icons/ReceiptOutlined";
 import TypeIcon from "@material-ui/icons/LocalDiningOutlined";
 import { IconListItem } from "../../components/IconListItem";
 import { Box } from "@material-ui/core";
+import { useQuery } from "@apollo/react-hooks";
+import { bundles } from "../../data";
+import { GET_BASKET } from "../../queries";
 
 const { default: placeholderHeaderImage } = require("./placeholder_header.png");
 
 export function BundleOverview() {
+  const { data, client } = useQuery<any>(GET_BASKET);
+  
+  const basket = data?.basketItems ?? [];
+  const selectedShopId = data?.selectedShopId;
+
+  const renderBundles = basket.length ? bundles
+    .filter(bundle => bundle.location.nodeId === selectedShopId)
+    .filter(bundle => !basket.find((basketNodeId) => basketNodeId === bundle.nodeId))
+    : bundles;
+
   return (
     <>
-      <BundleItem
-        name="Super Bundle"
-        products={[
-          { name: "Bananas", quantity: 5, price: 2 },
-          { name: "Apples", quantity: 8, price: 2 },
-          { name: "Pineapple", quantity: 1, price: 3 }
-        ]}
-        location={{
-          name: "Rewe",
-          street: "Rewestraße",
-          streetNumber: "12a",
-          zipCode: 12345,
-          city: "Berlin"
-        }}
-        onAddToCart={() => console.log("added to cart")}
-      />
-      <BundleItem
-        name="MEGA Bundle"
-        products={[
-          { name: "Dark bread", quantity: 1, price: 1.5 },
-          { name: "Marmelade", quantity: 1, price: 1.2 },
-          { name: "Cheese", unit: "g", quantity: 200, price: 2.2 }
-        ]}
-        location={{
-          name: "Rewe",
-          street: "Rewestraße",
-          streetNumber: "12a",
-          zipCode: 12345,
-          city: "Berlin"
-        }}
-        onAddToCart={() => console.log("added to cart")}
-      />
+      {renderBundles.map(bundle => (
+        <BundleItem
+          key={bundle.nodeId}
+          name={bundle.name}
+          peopleCount={bundle.peopleCount}
+          category={bundle.category}
+          products={bundle.items}
+          location={bundle.location}
+          onAddToCart={() => addToBasket(bundle)}
+        />
+      ))}
     </>
   );
+
+  function addToBasket(bundle) {
+    const data = { 
+      basketItems: [...basket, bundle.nodeId],
+      selectedShopId: bundle.location.nodeId,
+    };
+    
+    client.writeData({ data })
+  }
 }
 
-function BundleItem({ name: bundleName, products, location, onAddToCart }) {
+function BundleItem({ name: bundleName, products, location, peopleCount, category, onAddToCart }) {
   const price = products.reduce((acc, product) => acc + product.price, 0);
   return (
     <ContentCard>
@@ -60,13 +61,13 @@ function BundleItem({ name: bundleName, products, location, onAddToCart }) {
       <Typography variant="h5" paragraph>
         {bundleName}
       </Typography>
-      <IconListItem icon={TypeIcon}>Vegan Food</IconListItem>
+      <IconListItem icon={TypeIcon}>{category}</IconListItem>
       <IconListItem icon={LocationIcon}>
         {location.name}
         <br />
         {location.street} {location.streetNumber}
       </IconListItem>
-      <IconListItem icon={PeopleIcon}>For 2 People</IconListItem>
+      <IconListItem icon={PeopleIcon}>For {peopleCount} People</IconListItem>
 
       <Box display="flex" justifyContent="space-between" alignItems="flex-end">
         <Box flexGrow={1}>

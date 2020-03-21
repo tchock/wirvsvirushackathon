@@ -72,5 +72,8 @@
     "webpack-dev-server": "2.11.5",
     "webpack-graphql-loader": "0.1.2",
     "webpack-merge": "4.2.2"
+  },
+  "resolutions": {
+    "chokidar": "3.3.1"
   }
 }

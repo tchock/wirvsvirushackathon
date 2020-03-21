@@ -4,27 +4,26 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { FormattedNumber } from "react-intl";
 import { Button } from "@material-ui/core";
+import { useQuery } from "@apollo/react-hooks";
+import { GET_BASKET } from "../../../queries";
+import { bundles } from "../../../data";
 
 export function Basket() {
+  const { data: BasketData } = useQuery<any>(GET_BASKET);
+  const basketItems = BasketData?.basketItems || [];
+
+  const visibleBundles = bundles.filter(bundle => basketItems.includes(bundle.nodeId));
   return (
     <>
-      <BundleItem
-        name="Super Bundle"
-        products={[
-          { name: "Bananas", quantity: 5, price: 2 },
-          { name: "Apples", quantity: 8, price: 2 },
-          { name: "Pineapple", quantity: 1, price: 3 }
-        ]}
-      />
-      <LocationBox
-        location={{
-          name: "Rewe",
-          street: "Rewestraße",
-          streetNumber: "12a",
-          zipCode: 12345,
-          city: "Berlin"
-        }}
-      />
+      {visibleBundles.map(bundle => (
+        <BundleItem
+          name={bundle.name}
+          products={bundle.items}
+        />
+      ))}
+      {visibleBundles.length && <LocationBox
+        location={visibleBundles[0].location}
+      />}
       <Box>
         <Button fullWidth variant="contained" color="primary">
           Order now
