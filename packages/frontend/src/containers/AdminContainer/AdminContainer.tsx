@@ -4,8 +4,9 @@ import { Switch } from "react-router-dom";
 import { AcceptedOrdersContainer } from "../AcceptedOrders/AcceptedOrdersContainer";
 import { PendingApprovalOrdersContainer } from "../PendingApprovalOrders/PendingApprovalOrdersContainer";
 import styled from "styled-components";
-import { ApproveOrderContainer } from '../PendingApprovalOrders/ApproveOrder/ApproveOrderContainer';
-import { DenyOrderContainer } from '../PendingApprovalOrders/DenyOrder/DenyOrderContainer';
+import { SingleAcceptedOrder } from '../AcceptedOrders/SingleAcceptedOrder/SingleAcceptedOrder';
+import { SingleDenyOrder } from '../PendingApprovalOrders/SingleDenyOrder/SingleDenyOrder';
+import { SingleApproveOrder } from '../PendingApprovalOrders/SingleApproveOrder/SingleApproveOrder';
 
 const AdminContainerWrapper = styled.div``;
 
@@ -20,14 +21,14 @@ export const AdminContainer = (props: Props) => {
           component={PendingApprovalOrdersContainer}
         />
         <Route
-          path={"/admin/pending/:id/accept"}
+          path={"/admin/pending/:id/approve"}
           exact={true}
-          component={ApproveOrderContainer}
+          component={SingleApproveOrder}
         />
         <Route
           path={"/admin/pending/:id/deny"}
           exact={true}
-          component={DenyOrderContainer}
+          component={SingleDenyOrder}
         />
         <Route path={"/admin"} component={AcceptedOrdersContainer} />
       </Switch>

@@ -11,7 +11,7 @@ export const SinglePendingOrder = (props: Props) => {
     <OrderSummaryWithActions order={props.order}>
       <Grid item xs={6}>
         <Link
-          to="/admin/pending/1/accept"
+          to="/admin/pending/1/approve"
           fullWidth
           variant="contained"
           color="primary"
