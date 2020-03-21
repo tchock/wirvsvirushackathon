@@ -1,4 +1,6 @@
 import { makeExecutableSchema } from "apollo-server-lambda"
+import { asPaginationResolver } from "./pagination"
+import Order from "../Orders"
 
 const typeDef = /* GraphQL */ `
 type Query {
@@ -52,7 +54,7 @@ type Order implements Node {
   shareLink: String!
 }
 
-type OrderInput {
+input OrderInput {
   bundles: [BundleInput!]!
   store: String! # Store nodeId
   requestedPickUpTime: String # ISO8601
@@ -70,29 +72,34 @@ type BundleList {
 
 type Bundle implements Node {
   nodeId: String! # NOT any PK + SK
-  items: ItemList!
+  items: BundleItemList!
 }
 
-type BundleInput {
-  items: ItemList!
+input BundleInput {
+  items: BundleItemInput!
 }
 
-type ItemList {
-  # edges: [ItemEdge]!
-  nodes: [Item]!
+type BundleItemList {
+  # edges: [BundleItemEdge]!
+  nodes: [BundleItem]!
 }
 
-# type ItemEdge {
+# type BundleItemEdge {
 #   cursor: String!
-#   node: Item!
+#   node: BundleItem!
 # }
 
-type Item {
+type BundleItem {
   nodeId: String! # NOT any PK + SK
   quantity: Float!
   price: Float!
   name: String!
   unit: String!
+}
+
+input BundleItemInput {
+  nodeId: String!
+  quantity: Float!
 }
 
 interface User {
@@ -101,24 +108,24 @@ interface User {
 
 type Store implements Node & User {
   nodeId: String!
-  type: STORE
+  type: Audiences!
 }
 
-type Customer implements Node & User {
+type Customer implements Node & User {  
   nodeId: String!
-  type: CUSTOMER
+  type: Audiences!
 }
 `
 
 const resolvers = {
 
-  // Query: {
-  //   orders:  async (root, args, context) => {}
-  // },
+  Query: {
+    orders:  asPaginationResolver(Order.orders)
+  },
 
-  // Order: {
-  //   nodeId: nodeIdResovler
-  // }
+  Order: {
+    // nodeId: nodeIdResovler TODO
+  }
 
 }
 
