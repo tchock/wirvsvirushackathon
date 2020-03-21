@@ -9,7 +9,7 @@ type Props = {
 export const SinglePendingOrder = (props: Props) => {
   return (
     <OrderSummaryWithActions order={props.order}>
-      <Grid item xs={6}>
+      <Grid item md={6} xs={12}>
         <Link
           to="/admin/pending/1/approve"
           fullWidth
@@ -20,7 +20,7 @@ export const SinglePendingOrder = (props: Props) => {
           Accept Order
         </Link>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item md={6} xs={12}>
         <Link
           to="/admin/pending/1/deny"
           fullWidth
