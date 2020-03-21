@@ -28,6 +28,7 @@ const baseRules = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'react/jsx-one-expression-per-line': 0,
+    'react/style-prop-object': 'no',
     'react/button-has-type': 0,
     'react/prop-types': 0,
     'react/no-array-index-key': 0,
