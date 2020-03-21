@@ -1,1 +1,5 @@
-module.exports = require('ci-helper')('node')
+module.exports = {
+  singleQuote: true,
+  trailingComma: 'es5',
+  printWidth: 100,
+}
