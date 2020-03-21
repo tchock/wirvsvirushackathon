@@ -2,7 +2,7 @@
   "name": "api",
   "private": true,
   "scripts": {
-    "start": "SLS_DEBUG=* sls offline --skipCacheInvalidation --port 1337 --stage=$STAGE start",
+    "start": "SLS_DEBUG=* sls offline --skipCacheInvalidation --stage=$STAGE start",
     "test": "STAGE=test jest --runInBand",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src test",
     "deploy": "sls deploy --stage=$STAGE && ci-helper deploy custom"

@@ -28,11 +28,11 @@ export async function getOrderMocks() {
         }
       ]
     },
-    customer: { nodeId: 'some-customer-node-id' },
+    customer: { nodeId: 'some-customer-node-id', type: 'CUSTOMER' },
     orderStatus: OrderStatus.ACCEPTED,
     pickUpCode: '123456',
     shareLink: 'https://www.googl.com',
-    store: { nodeId: 'some-store-node-id' },
+    store: { nodeId: 'some-store-node-id',  type: 'STORE' },
     confirmedPickUpTime: '2020-06-06T00:00:00.000Z',
     requestedPickUpTime: '2020-06-07T00:00:00.000Z',
   }, {
@@ -55,11 +55,11 @@ export async function getOrderMocks() {
         }
       ]
     },
-    customer: { nodeId: 'some-customer-node-id' },
+    customer: { nodeId: 'some-customer-node-id', type: 'CUSTOMER' }, 
     orderStatus: OrderStatus.REJECTED,
     pickUpCode: '123456',
     shareLink: 'https://www.googl.com',
-    store: { nodeId: 'some-store-node-id' },
+    store: { nodeId: 'some-store-node-id',  type: 'STORE' },
     confirmedPickUpTime: '2020-06-06T00:00:00.000Z',
     requestedPickUpTime: '2020-06-07T00:00:00.000Z',
   },{
@@ -89,11 +89,11 @@ export async function getOrderMocks() {
         }
       ]
     },
-    customer: { nodeId: 'some-customer-node-id' },
+    customer: { nodeId: 'some-customer-node-id', type: 'CUSTOMER' },
     orderStatus: OrderStatus.ACCEPTED,
     pickUpCode: '123456',
     shareLink: 'https://www.googl.com',
-    store: { nodeId: 'some-store-node-id' },
+    store: { nodeId: 'some-store-node-id',  type: 'STORE' },
     confirmedPickUpTime: '2020-06-06T00:00:00.000Z',
     requestedPickUpTime: '2020-06-07T00:00:00.000Z',
   }];
