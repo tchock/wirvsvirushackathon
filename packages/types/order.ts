@@ -26,7 +26,7 @@ export interface Bundle extends Node {
 
 export interface Item extends Node {
   quantity: number;
-  price: number;
+  price: string;
   name: string;
   unit: string;
 }

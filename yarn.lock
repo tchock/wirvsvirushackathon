@@ -2262,6 +2262,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/express-jwt@npm:0.0.42":
+  version: 0.0.42
+  resolution: "@types/express-jwt@npm:0.0.42"
+  dependencies:
+    "@types/express": "*"
+    "@types/express-unless": "*"
+  checksum: 2/82477e875e2ef225c69488262bbf86d77c3ce604792b3d8d9fcf4033296fc66baa290f37aed05e237cee8e2bbd6f801f0f75d5b661f649c94a668f20b66899f8
+  languageName: node
+  linkType: hard
+
 "@types/express-serve-static-core@npm:*":
   version: 4.17.2
   resolution: "@types/express-serve-static-core@npm:4.17.2"
@@ -2269,6 +2279,15 @@ __metadata:
     "@types/node": "*"
     "@types/range-parser": "*"
   checksum: 2/edf28e5a9cb6b47a57eec81739a206ee3c21444422182e797df78d6ea0e7676e0cc66207672b7cfe71c090968ff9fefb12d7452defa8adb365ff8a58f98f90ae
+  languageName: node
+  linkType: hard
+
+"@types/express-unless@npm:*":
+  version: 0.5.1
+  resolution: "@types/express-unless@npm:0.5.1"
+  dependencies:
+    "@types/express": "*"
+  checksum: 2/3477cf7ff554f6c5b6398b922d757fa7268c964f5e449eba9a82a27113683481624b7bc42233de51b2904b6255a99477b39fbd8b9ede321a30586ee2e9a8276d
   languageName: node
   linkType: hard
 
@@ -2359,6 +2378,15 @@ __metadata:
   version: 7.0.4
   resolution: "@types/json-schema@npm:7.0.4"
   checksum: 2/5094037431e4b29d5cc9d6938ea596d1145cc46d305d8d302a477a54d0a7a83ba4629abbf52fcabc3ffdb31cf94647bc366a7bcc544770cbb80212d903018e2b
+  languageName: node
+  linkType: hard
+
+"@types/jsonwebtoken@npm:8.3.8":
+  version: 8.3.8
+  resolution: "@types/jsonwebtoken@npm:8.3.8"
+  dependencies:
+    "@types/node": "*"
+  checksum: 2/c331057ce2145d67dda1c7fbc79eeddce16947c8774f7dd0d2901769f2e3f62c6b64c381af381bd0952f8786eaac260394abc567334fa5907947b622263fd831
   languageName: node
   linkType: hard
 
@@ -3168,6 +3196,7 @@ __metadata:
     "@babel/plugin-syntax-dynamic-import": 7.8.3
     "@babel/preset-env": 7.8.7
     "@babel/preset-typescript": 7.8.3
+    "@types/jsonwebtoken": 8.3.8
     "@types/node": ^13.9.2
     "@types/serverless": 1.18.6
     "@typescript-eslint/eslint-plugin": 2.24.0
@@ -3185,6 +3214,8 @@ __metadata:
     file-loader: 0.11.2
     fs-extra: 3.0.1
     graphql: ^14.6.0
+    jsonwebtoken: ^8.5.1
+    jwks-rsa: ^1.7.0
     prettier: 1.19.1
     raf: 3.4.1
     raw-loader: 0.5.1
@@ -9875,6 +9906,21 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"jwks-rsa@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "jwks-rsa@npm:1.7.0"
+  dependencies:
+    "@types/express-jwt": 0.0.42
+    debug: ^4.1.0
+    jsonwebtoken: ^8.5.1
+    limiter: ^1.1.4
+    lru-memoizer: ^2.0.1
+    ms: ^2.1.2
+    request: ^2.88.0
+  checksum: 2/a8ec2814e15a6319d449811df123f588a7812631565f6d612f56473748cf8f20f5ce3d7b9e8c4ee287ef9d14d2c76c48251b67d7fb6e9f8a85f00ed9bc6f21ae
+  languageName: node
+  linkType: hard
+
 "jws@npm:^3.2.2":
   version: 3.2.2
   resolution: "jws@npm:3.2.2"
@@ -10032,6 +10078,13 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"limiter@npm:^1.1.4":
+  version: 1.1.5
+  resolution: "limiter@npm:1.1.5"
+  checksum: 2/83f7aa20fefdcfc72a76f034ce804ad8d0063cd94c3ebd9c9b08157051b3f76b099cb953ccd09a0117ed06b876773c6b3876afd88be8d11ced252a8a85603786
+  languageName: node
+  linkType: hard
+
 "load-json-file@npm:^1.0.0":
   version: 1.1.0
   resolution: "load-json-file@npm:1.1.0"
@@ -10115,6 +10168,13 @@ fsevents@~2.1.2:
     p-locate: ^3.0.0
     path-exists: ^3.0.0
   checksum: 2/0b6bf0c1bb09021499f6198ed6a4ae367e8224e2493a74cc7bc5f4e6eca9ed880a5f7fdfb4d57b7e21d3e289c3abfe152cd510cacb1d03049f9d81d9a7d302ca
+  languageName: node
+  linkType: hard
+
+"lodash.clonedeep@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "lodash.clonedeep@npm:4.5.0"
+  checksum: 2/41e2fe4c57c56a66a4775a6ddeebe9272f0ce4d257d97b3cb8724a9b01eeec9b09ce7e8603d6926baf5f48c287d988f0de4bf5aa244ea86b1f22c1e6f203cc27
   languageName: node
   linkType: hard
 
@@ -10281,6 +10341,26 @@ fsevents@~2.1.2:
   dependencies:
     yallist: ^3.0.2
   checksum: 2/ffd9a280fa3400e731265db502270c2a65432f3fbfac23d480c72f675ec16dbbeddd57d4baf7aca70ab7af49949fad1bcaaf5a5e6e1cfed7316de71bb5dddf1c
+  languageName: node
+  linkType: hard
+
+"lru-cache@npm:~4.0.0":
+  version: 4.0.2
+  resolution: "lru-cache@npm:4.0.2"
+  dependencies:
+    pseudomap: ^1.0.1
+    yallist: ^2.0.0
+  checksum: 2/503a21816bef4909ebb3a6b6916f8aafb73c850cf4dd27905d2971311954d630ec004c72ac8521165cf196782f8a45b13cc34935209cec6339e4951e155e659b
+  languageName: node
+  linkType: hard
+
+"lru-memoizer@npm:^2.0.1":
+  version: 2.1.0
+  resolution: "lru-memoizer@npm:2.1.0"
+  dependencies:
+    lodash.clonedeep: ^4.5.0
+    lru-cache: ~4.0.0
+  checksum: 2/be9f5f97fa3309d22e12714c5a214b700d5109c27a6dbc3727499c8b884e086072baf4bfc6de107c83d540d06ae577b269d5258e48ba2f8e3a973fc0cf1c1e67
   languageName: node
   linkType: hard
 
@@ -10751,7 +10831,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"ms@npm:^2.1.1":
+"ms@npm:^2.1.1, ms@npm:^2.1.2":
   version: 2.1.2
   resolution: "ms@npm:2.1.2"
   checksum: 2/9b65fb709bc30c0c07289dcbdb61ca032acbb9ea5698b55fa62e2cebb04c5953f1876a1f3f7f4bc2e91d4bf4d86003f3e207c3bc6ee2f716f99827e62389cd0e
@@ -12264,7 +12344,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"pseudomap@npm:^1.0.2":
+"pseudomap@npm:^1.0.1, pseudomap@npm:^1.0.2":
   version: 1.0.2
   resolution: "pseudomap@npm:1.0.2"
   checksum: 2/1ad1802645e830d99f9c1db97efc6902d2316b660454633229f636dd59e751d00498dd325d3b18d49f2be990a2c9d28f8bfe6f9b544a8220a5faa2bfb4694bb7
@@ -15954,7 +16034,7 @@ resolve@1.1.x:
   languageName: node
   linkType: hard
 
-"yallist@npm:^2.1.2":
+"yallist@npm:^2.0.0, yallist@npm:^2.1.2":
   version: 2.1.2
   resolution: "yallist@npm:2.1.2"
   checksum: 2/f83e3d18eeba68a0276be2ab09260be3f2a300307e84b1565c620ef71f03f106c3df9bec4c3a91e5fa621a038f8826c19b3786804d3795dd4f999e5b6be66ea3
