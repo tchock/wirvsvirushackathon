@@ -1,6 +1,7 @@
 // import * as repository from './repository';
 import * as mocks from './mockData';
-import { Order, OrderStatus, Audiences } from 'types/order';
+import { OrderStatus, Audiences } from 'types/order';
+import { UserInfo } from '../graphql/types';
 
 export type getOrderInput = {
   nodeId: string;
@@ -12,17 +13,10 @@ export type getOrdersInput = {
   audience: Audiences;
 };
 
-export async function getOrderByNodeId(args: getOrderInput) {
-  return toOrder(await mocks.getOrderByNodeId(args));
+export async function getOrderByNodeId(args: getOrderInput, user: UserInfo) {
+  return mocks.getOrderByNodeId(args);
 }
 
-export async function getOrders(args: getOrdersInput) {
-  return (await mocks.getOrders(args)).map(toOrder);
-}
-
-function toOrder(dbOrder): Order {
-  return {
-    ...dbOrder,
-    nodeId: dbOrder.SK,
-  };
+export async function getOrders(args: getOrdersInput, user: UserInfo) {
+  return mocks.getOrders(args);
 }

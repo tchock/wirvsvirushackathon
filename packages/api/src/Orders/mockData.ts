@@ -106,8 +106,15 @@ export async function getOrderMocks() {
   ];
 }
 
+function toOrder(dbOrder) {
+  return {
+    ...dbOrder,
+    nodeId: dbOrder.SK,
+  };
+}
+
 export async function getOrders(args) {
-  const orders = await getOrderMocks();
+  const orders = (await getOrderMocks()).map(toOrder);
   if (args.orderStatus) {
     return orders.filter(order => order.orderStatus === args.orderStatus);
   }
@@ -115,5 +122,5 @@ export async function getOrders(args) {
 }
 
 export async function getOrderByNodeId(args) {
-  return (await getOrderMocks()).find(order => order.SK === args.nodeId);
+  return toOrder((await getOrderMocks()).find(order => order.SK === args.nodeId));
 }
