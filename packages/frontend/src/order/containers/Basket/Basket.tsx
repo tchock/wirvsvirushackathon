@@ -1,11 +1,11 @@
 import React from "react";
+import { ContentCard } from "../../../components/ContentCard";
+import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import { FormattedNumber } from "react-intl";
-import { ButtonRow } from "../../components/ButtonRow";
-import { ContentCard } from "../../components/ContentCard";
+import { Button } from "@material-ui/core";
 
-export function BundleOverview() {
+export function Basket() {
   return (
     <>
       <BundleItem
@@ -15,6 +15,8 @@ export function BundleOverview() {
           { name: "Apples", quantity: 8, price: 2 },
           { name: "Pineapple", quantity: 1, price: 3 }
         ]}
+      />
+      <LocationBox
         location={{
           name: "Rewe",
           street: "Rewestraße",
@@ -22,29 +24,17 @@ export function BundleOverview() {
           zipCode: 12345,
           city: "Berlin"
         }}
-        onAddToCart={() => console.log("added to cart")}
       />
-      <BundleItem
-        name="MEGA Bundle"
-        products={[
-          { name: "Dark bread", quantity: 1, price: 1.5 },
-          { name: "Marmelade", quantity: 1, price: 1.2 },
-          { name: "Cheese", unit: "g", quantity: 200, price: 2.2 }
-        ]}
-        location={{
-          name: "Rewe",
-          street: "Rewestraße",
-          streetNumber: "12a",
-          zipCode: 12345,
-          city: "Berlin"
-        }}
-        onAddToCart={() => console.log("added to cart")}
-      />
+      <Box>
+        <Button fullWidth variant="contained" color="primary">
+          Order now
+        </Button>
+      </Box>
     </>
   );
 }
 
-function BundleItem({ name: bundleName, products, location, onAddToCart }) {
+function BundleItem({ name: bundleName, products }) {
   const price = products.reduce((acc, product) => acc + product.price, 0);
   return (
     <ContentCard>
@@ -62,6 +52,13 @@ function BundleItem({ name: bundleName, products, location, onAddToCart }) {
       <Typography>
         Price <FormattedNumber value={price} currency="EUR" />
       </Typography>
+    </ContentCard>
+  );
+}
+
+function LocationBox({ location }) {
+  return (
+    <ContentCard>
       <Typography variant="h6">Location</Typography>
       <Typography>{location.name}</Typography>
       <Typography>
@@ -70,16 +67,6 @@ function BundleItem({ name: bundleName, products, location, onAddToCart }) {
       <Typography>
         {location.zipCode} {location.city}
       </Typography>
-
-      <ButtonRow>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => onAddToCart()}
-        >
-          Add to cart
-        </Button>
-      </ButtonRow>
     </ContentCard>
   );
 }
