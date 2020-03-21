@@ -10,7 +10,7 @@ type Props = {
 export const SingleAcceptedOrder = (props: Props) => {
   return (
     <OrderSummaryWithActions order={props.order}>
-      <Grid item xs={6}>
+      <Grid item md={6} xs={12}>
         <Button
           fullWidth
           variant="contained"
@@ -20,7 +20,7 @@ export const SingleAcceptedOrder = (props: Props) => {
           Paid
         </Button>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item md={6} xs={12}>
         <Button
           fullWidth
           variant="contained"

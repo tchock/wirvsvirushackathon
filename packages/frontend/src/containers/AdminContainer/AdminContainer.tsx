@@ -4,7 +4,6 @@ import { Switch } from "react-router-dom";
 import { AcceptedOrdersContainer } from "../AcceptedOrders/AcceptedOrdersContainer";
 import { PendingApprovalOrdersContainer } from "../PendingApprovalOrders/PendingApprovalOrdersContainer";
 import styled from "styled-components";
-import { SingleAcceptedOrder } from '../AcceptedOrders/SingleAcceptedOrder/SingleAcceptedOrder';
 import { SingleDenyOrder } from '../PendingApprovalOrders/SingleDenyOrder/SingleDenyOrder';
 import { SingleApproveOrder } from '../PendingApprovalOrders/SingleApproveOrder/SingleApproveOrder';
 
