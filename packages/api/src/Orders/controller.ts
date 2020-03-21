@@ -1,11 +1,14 @@
 import { OrderList, Order } from 'types/order';
+import { getOrderByNodeId } from './service';
 
 async function orders(_root, _args, _context: any): Promise<OrderList> {
   return Promise.resolve([] as any);
 }
 
-async function order (_root, _args, _context: any): Promise<Order> {
-  return Promise.resolve({} as any);
+async function order (_root, args, _context: any): Promise<Order> {
+  const nodeId: string = args.nodeId;
+
+  return getOrderByNodeId(nodeId);
 }
 
 async function orderPickUp(_root, _args, _context: any): Promise<Order> {

@@ -3837,7 +3837,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws-sdk@npm:^2.490.0, aws-sdk@npm:^2.642.0":
+"aws-sdk@npm:^2.490.0, aws-sdk@npm:^2.642.0, aws-sdk@npm:^2.643.0":
   version: 2.643.0
   resolution: "aws-sdk@npm:2.643.0"
   dependencies:
@@ -15736,6 +15736,7 @@ resolve@1.1.x:
     "@typescript-eslint/eslint-plugin-tslint": 2.24.0
     "@typescript-eslint/parser": 2.24.0
     "@yarnpkg/pnpify": ^2.0.0-rc.19
+    aws-sdk: ^2.643.0
     babel-loader: 8.0.6
     css-loader: 3.4.2
     eslint: 6.8.0
