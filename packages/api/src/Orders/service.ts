@@ -47,6 +47,10 @@ export async function pickupOrder(args, user: UserInfo) {
   return repository.upsertOrder(order);
 }
 
+export async function getOrderByPickUpCode(args, user: UserInfo) {
+  return repository.getOrderByPickUpCode(args.pickUpCode, user.sub);
+}
+
 export async function createOrder(args: OrderInput, user: UserInfo): Promise<Order> {
   const order: Order = {
     nodeId: uuid.v4(),
