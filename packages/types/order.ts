@@ -14,6 +14,7 @@ export interface Order extends Node {
   store: Store;
   customer: Customer;
   orderStatus: OrderStatus;
+  rejectionReason?: string;
   bundles: BundleList;
   shareLink?: string;
 }
