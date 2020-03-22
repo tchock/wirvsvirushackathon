@@ -38,6 +38,14 @@ provider:
         - dynamodb:BatchGetItem
         - dynamodb:BatchWriteItem
       Resource: 'arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.config.DB_TABLE_MAIN}'
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:Query
+      Resource: 'arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.config.DB_TABLE_MAIN}/index/${self:custom.config.GSI_INDEX_NAME}'
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:Query
+      Resource: 'arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.config.DB_TABLE_MAIN}/index/${self:custom.config.GSI_2_INDEX_NAME}'
 functions:
   app:
     handler: src/index.handler
@@ -64,53 +72,39 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          -
-            AttributeName: "PK"
-            AttributeType: "S"
-          -
-            AttributeName: "SK"
-            AttributeType: "S"
-          -
-            AttributeName: "GSI_PK"
-            AttributeType: "S"
-          -
-            AttributeName: "GSI_SK"
-            AttributeType: "S"
-          -
-            AttributeName: "GSI_PK_2"
-            AttributeType: "S"
-          -
-            AttributeName: "GSI_SK_2"
-            AttributeType: "S"
+          - AttributeName: 'PK'
+            AttributeType: 'S'
+          - AttributeName: 'SK'
+            AttributeType: 'S'
+          - AttributeName: 'GSI_PK'
+            AttributeType: 'S'
+          - AttributeName: 'GSI_SK'
+            AttributeType: 'S'
+          - AttributeName: 'GSI_PK_2'
+            AttributeType: 'S'
+          - AttributeName: 'GSI_SK_2'
+            AttributeType: 'S'
         KeySchema:
-          -
-            AttributeName: "PK"
-            KeyType: "HASH"
-          -
-            AttributeName: "SK"
-            KeyType: "RANGE"
+          - AttributeName: 'PK'
+            KeyType: 'HASH'
+          - AttributeName: 'SK'
+            KeyType: 'RANGE'
         GlobalSecondaryIndexes:
-          -
-            IndexName: "${self:custom.config.GSI_INDEX_NAME}"
+          - IndexName: '${self:custom.config.GSI_INDEX_NAME}'
             Projection:
               ProjectionType: ALL
             KeySchema:
-              -
-                AttributeName: "GSI_PK"
-                KeyType: "HASH"
-              -
-                AttributeName: "GSI_SK"
-                KeyType: "RANGE"
-          -
-            IndexName: "${self:custom.config.GSI_2_INDEX_NAME}"
+              - AttributeName: 'GSI_PK'
+                KeyType: 'HASH'
+              - AttributeName: 'GSI_SK'
+                KeyType: 'RANGE'
+          - IndexName: '${self:custom.config.GSI_2_INDEX_NAME}'
             Projection:
               ProjectionType: ALL
             KeySchema:
-              -
-                AttributeName: "GSI_PK_2"
-                KeyType: "HASH"
-              -
-                AttributeName: "GSI_SK_2"
-                KeyType: "RANGE"
-        TableName: "${self:custom.config.DB_TABLE_MAIN}"
+              - AttributeName: 'GSI_PK_2'
+                KeyType: 'HASH'
+              - AttributeName: 'GSI_SK_2'
+                KeyType: 'RANGE'
+        TableName: '${self:custom.config.DB_TABLE_MAIN}'
         BillingMode: PAY_PER_REQUEST
