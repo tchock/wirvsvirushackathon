@@ -1,7 +1,7 @@
-import * as mocks from './mockData';
+// import * as mocks from './mockData';
 import { OrderStatus, Audiences, OrderInput, Order } from 'types/order';
 import { UserInfo } from '../graphql/types';
-import { upsertOrder } from './repository';
+import * as repository from './repository';
 import * as uuid from 'uuid';
 
 export type getOrderInput = {
@@ -15,11 +15,11 @@ export type getOrdersInput = {
 };
 
 export async function getOrderByNodeId(args: getOrderInput, user: UserInfo) {
-  return mocks.getOrderByNodeId(args);
+  return repository.getOrder(args.nodeId, user.sub, args.audience);
 }
 
 export async function getOrders(args: getOrdersInput, user: UserInfo) {
-  return mocks.getOrders(args);
+  return repository.getOrders(user.sub, args.audience, args.orderStatus);
 }
 
 export async function createOrder(args: OrderInput, user: UserInfo): Promise<Order> {
@@ -37,7 +37,7 @@ export async function createOrder(args: OrderInput, user: UserInfo): Promise<Ord
     },
   };
 
-  return upsertOrder(order);
+  return repository.upsertOrder(order);
 }
 
 function createFirstSegmentOfUuid(): string {

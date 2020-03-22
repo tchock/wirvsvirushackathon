@@ -1,5 +1,5 @@
 import * as AWS from 'aws-sdk';
-import { Order, Audiences } from 'types/order';
+import { Order, Audiences, OrderStatus } from 'types/order';
 import config from '../../config';
 
 enum DocumentTypes {
@@ -64,12 +64,16 @@ export async function getOrder(
   }
 }
 
-export async function getOrders(userId: string, userType: Audiences): Promise<Order[]> {
+export async function getOrders(
+  userId: string,
+  userType: Audiences,
+  orderStatus?: OrderStatus
+): Promise<Order[]> {
   switch (userType) {
     case Audiences.CUSTOMER:
-      return getOrdersForCustomer(userId);
+      return getOrdersForCustomer(userId, orderStatus);
     case Audiences.STORE:
-      return getOrdersForStore(userId);
+      return getOrdersForStore(userId, orderStatus);
     default:
       throw new Error('Unreachable');
   }
@@ -111,33 +115,40 @@ async function getOrderForCustomer(nodeId: string, userId: string) {
     config.GSI_INDEX_NAME
   );
 
-  return orders[0].payload;
+  return orders[0] && orders[0].payload;
 }
 
-async function getOrdersForCustomer(userId: string) {
+async function getOrdersForCustomer(userId: string, orderStatus?: OrderStatus) {
   return (
     await queryOrders<Order>(
       'GSI_PK = :userId',
       {
         ':userId': `userId_${userId}`,
       },
-      config.GSI_INDEX_NAME
+      config.GSI_INDEX_NAME,
+      orderStatus
     )
-  ).Items.map(orderDocument => orderDocument.payload);
+  ).map(orderDocument => orderDocument.payload);
 }
 
-async function getOrdersForStore(userId: string) {
+async function getOrdersForStore(userId: string, orderStatus?: OrderStatus) {
   return (
-    await queryOrders<Order>('PK = :userId', {
-      ':userId': `userId_${userId}`,
-    })
-  ).Items.map(orderDocument => orderDocument.payload);
+    await queryOrders<Order>(
+      'PK = :userId',
+      {
+        ':userId': `userId_${userId}`,
+      },
+      null,
+      orderStatus
+    )
+  ).map(orderDocument => orderDocument.payload);
 }
 
 async function queryOrders<T>(
   keyCondition: string,
   expression: Record<string, string | number>,
-  index?: string
+  index?: string,
+  orderStatus?: OrderStatus
 ) {
   const params: AWS.DynamoDB.DocumentClient.QueryInput = {
     TableName: tableName,
@@ -145,9 +156,14 @@ async function queryOrders<T>(
     ExpressionAttributeValues: expression,
   };
 
+  if (orderStatus) {
+    params.FilterExpression = 'payload.orderStatus = :orderStatus';
+    params.ExpressionAttributeValues[':orderStatus'] = orderStatus;
+  }
+
   if (index) {
     params.IndexName = index;
   }
 
-  return documentClient.query(params).promise();
+  return (await documentClient.query(params).promise()).Items;
 }
