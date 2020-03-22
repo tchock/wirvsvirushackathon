@@ -6,6 +6,7 @@ import { GET_CUSTOMER_ORDERS } from "../../../services/OrdersService";
 import { CenteredProgress } from "../../../components/CenteredProgress";
 import { FormattedNumber } from "react-intl";
 import { DateListItem } from "../../../components/DateListItem";
+import { Link } from "react-router-dom";
 
 export function AccountOrdersOverview() {
   const { data, loading } = useQuery(GET_CUSTOMER_ORDERS);
@@ -44,7 +45,19 @@ function OrderItem({ order }) {
 }
 
 function getActionButton(order) {
-  return <Button size="large" variant="contained" color={getStatusColor(order)} fullWidth>{getStatusText(order)}</Button>
+  return (
+    <Button
+      disableElevation
+      component={Link}
+      to={`/account/order/${order.nodeId}`}
+      size="large"
+      variant="contained"
+      color={getStatusColor(order)}
+      fullWidth
+    >
+      {getStatusText(order)}
+    </Button>
+  )
 }
 
 function getStatusText(order) {

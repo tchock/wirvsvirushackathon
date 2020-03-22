@@ -39,7 +39,7 @@ export function Account({ match, location }: RouteComponentProps) {
         component={AccountOrdersOverview}
       />
       <Route
-        path="/account/order/:pickUpCode"
+        path="/account/order/:orderId"
         component={AccountOrderDetails}
       />
     </Switch>
