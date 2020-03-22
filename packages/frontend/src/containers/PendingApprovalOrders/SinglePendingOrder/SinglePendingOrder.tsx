@@ -11,11 +11,23 @@ export const SinglePendingOrder = (props: Props) => {
   return (
     <OrderSummaryWithActions order={props.order} isEditMode={isEditMode}>
       {isEditMode ? (
-        <Grid item xs={12}>
-          <Button fullWidth variant="contained" color="primary">
-            Accept
-          </Button>
-        </Grid>
+        <>
+          <Grid item xs={6}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="secondary"
+              onClick={() => setEditMode(false)}
+            >
+              Cancel
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button fullWidth variant="contained" color="primary">
+              Accept
+            </Button>
+          </Grid>
+        </>
       ) : (
         <>
           <Grid item xs={6}>

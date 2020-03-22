@@ -10,19 +10,19 @@ import { OrderSummaryEditable } from "./OrderSummaryEditable/OrderSummaryEditabl
 import { getOrderTotalPrice } from "../../utils";
 import { PacketIcon } from "../Icons/PacketIcon";
 
-const OrderSummaryWrapper = styled.div``;
+export const OrderSummaryWrapper = styled.div``;
 
-const PriceGrid = styled(Grid)`
+export const PriceGrid = styled(Grid)`
   margin-top: auto;
   margin-right: auto;
   text-align: right;
 `;
 
-const ListTitle = styled.div`
+export const ListTitle = styled.div`
   padding-left: ${getSpacing(4)}px;
 `;
 
-const BundleIconListItem = styled(IconListItem)`
+export const BundleIconListItem = styled(IconListItem)`
   margin-bottom: 0;
 `;
 
@@ -38,7 +38,7 @@ export const OrderSummary = (props: Props) => {
   ) : (
     <OrderSummaryWrapper>
       <Typography paragraph variant="h5">
-        Order# {props.order.pickUpCode}
+        Order# {props.order.nodeId}
       </Typography>
       <ListTitle>
         <Typography color="textSecondary">Pick up date:</Typography>
