@@ -19,8 +19,12 @@ export interface Order extends Node {
   shareLink?: string;
 }
 
-export interface Store extends Node {}
-export interface Customer extends Node {}
+export interface User {
+  type: Audiences;
+}
+
+export interface Store extends Node, User {}
+export interface Customer extends Node, User {}
 export interface Bundle extends Node {
   items: ItemList;
 }
