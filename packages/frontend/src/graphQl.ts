@@ -4,7 +4,7 @@ import { resolvers, typeDefs } from './resolvers';
 
 export const client = new ApolloClient({
   cache: new InMemoryCache(),
-  uri: 'https://q97xw1f31g.execute-api.us-east-1.amazonaws.com/dev/graphql',
+  uri: 'https://hq4vnzt36e.execute-api.us-east-1.amazonaws.com/staging/graphql',
   typeDefs,
   resolvers,
 });

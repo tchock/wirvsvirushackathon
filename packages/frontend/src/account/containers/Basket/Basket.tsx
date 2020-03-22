@@ -4,8 +4,9 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { FormattedNumber } from "react-intl";
 import { Button } from "@material-ui/core";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { GET_BASKET } from "../../../queries";
+import { PLACE_ORDER } from '../../../services/OrdersService';
 import { bundles } from "../../../data";
 import { ButtonRow } from "../../../components/ButtonRow";
 import DeleteIcon from "@material-ui/icons/DeleteOutlined";
@@ -15,6 +16,7 @@ import { IconListItem } from "../../../components/IconListItem";
 
 export function Basket() {
   const { data: BasketData, client } = useQuery<any>(GET_BASKET);
+  const [placeOrder] = useMutation(PLACE_ORDER);
   const basketItems: any[] = BasketData?.basketItems || [];
 
   const selectedBundles = bundles.filter(bundle => basketItems.includes(bundle.nodeId));
@@ -38,12 +40,26 @@ export function Basket() {
         location={selectedBundles[0].location}
       />}
       <Box mx={1}>
-        <Button fullWidth variant="contained" color="primary">
+        <Button fullWidth variant="contained" color="primary" onClick={handleOrder}>
           Order now
         </Button>
       </Box>
     </>
   );
+
+  function handleOrder() {
+    const inputBundles = selectedBundles.map(bundle => ({
+      nodeId: bundle.nodeId,
+      items: bundle.items,
+    }))
+    placeOrder({ variables: { orderInput: {
+      bundles: inputBundles,
+      store: "c3RvcmVJZA==",
+      requestedPickUpTime: (new Date()).toISOString(),
+    } } }).then(() => {
+      clearBasket();
+    });
+  }
 
   function removeFromBasket(bundle) {
     const removalIndex = basketItems.findIndex(nodeId => bundle.nodeId === nodeId);
@@ -59,6 +75,15 @@ export function Basket() {
     };
     
     client.writeData({ data })
+  }
+
+  function clearBasket() {
+    client.writeData({ 
+      data: {
+        basketItems: [],
+        selectedShopId: undefined,
+      }
+    });
   }
 }
 

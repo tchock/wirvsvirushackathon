@@ -115,10 +115,49 @@ export const getPendingOrder = () => gql`
   }
 `;
 
+const orderFragment = `
+  nodeId
+  pickUpCode
+  confirmedPickUpTime
+  requestedPickUpTime
+  store {
+    nodeId
+    type
+  }
+  customer {
+    nodeId
+    type
+  }
+  orderStatus
+  bundles {
+    nodes {
+      nodeId
+      items {
+        nodes {
+          nodeId
+          quantity
+          price
+          name
+          unit
+        }
+      }
+    }
+  }
+  shareLink
+`;
+
+export const PLACE_ORDER = gql`
+  mutation orderPlace($orderInput: OrderInput) {
+  orderPlace (order: $orderInput) {
+    ${orderFragment}
+  }
+}
+`;
+
 export const APPROVE_ORDER = gql`
   mutation orderAccept($nodeId: NodeId!) {
     orderAccept(nodeId: $nodeId) {
-      nodeId
+      ${orderFragment}
     }
   }
 `;
@@ -126,7 +165,7 @@ export const APPROVE_ORDER = gql`
 export const DENY_ORDER = gql`
   mutation orderDecline($nodeId: NodeId!) {
     orderDecline(nodeId: $nodeId) {
-      nodeId
+      ${orderFragment}
     }
   }
 `;
@@ -134,7 +173,7 @@ export const DENY_ORDER = gql`
 export const PICK_UP_ORDER = gql`
   mutation orderPickUp($pickUpCode: String!) {
     orderPickUp(pickUpCode: $pickUpCode) {
-      nodeId
+      ${orderFragment}
     }
   }
 `;
