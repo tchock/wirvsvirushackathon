@@ -10,7 +10,7 @@ const typeDef = /* GraphQL */ `
   }
 
   type Mutation {
-    # orderPickUp(pickUpCode: String!): Order # order status -> PICKED_UP (by ??)
+    orderPickUp(pickUpCode: String!): Order # order status -> PICKED_UP (by ??)
     orderDecline(nodeId: NodeId!, reason: String): Order # order status -> REJECTED (by store owner)
     orderAccept(nodeId: NodeId!): Order # order status -> ACCEPTED (by store owner)
     orderPlace(order: OrderInput): Order # creates order (by customer)
@@ -134,6 +134,7 @@ const resolvers = {
     orderPlace: Order.orderPlace,
     orderAccept: Order.orderAccept,
     orderDecline: Order.orderDecline,
+    orderPickUp: Order.orderPickUp,
   },
   Order: {
     bundles: asPaginationResolver(parent => parent.bundles),

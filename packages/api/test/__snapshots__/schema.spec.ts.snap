@@ -12,7 +12,8 @@ type Bundle implements Node {
 }
 
 input BundleInput {
-  items: BundleItemInput!
+  nodeId: NodeId!
+  items: [BundleItemInput!]!
 }
 
 type BundleItem {
@@ -26,6 +27,13 @@ type BundleItem {
 input BundleItemInput {
   nodeId: NodeId!
   quantity: Float!
+
+  \\"\\"\\"
+  once we handle bundles on the server side we should drop all these for placing an order
+  \\"\\"\\"
+  price: Float!
+  name: String!
+  unit: String!
 }
 
 type BundleItemList {
@@ -44,10 +52,8 @@ type Customer implements Node & User {
 }
 
 type Mutation {
-  \\"\\"\\"
-  orderPickUp(pickUpCode: String!): Order # order status -> PICKED_UP (by ??)
-  \\"\\"\\"
-  orderDecline(nodeId: NodeId!): Order
+  orderPickUp(pickUpCode: String!): Order
+  orderDecline(nodeId: NodeId!, reason: String): Order
   orderAccept(nodeId: NodeId!): Order
   orderPlace(order: OrderInput): Order
 }
@@ -68,12 +74,12 @@ type Order implements Node {
   customer: Customer!
   orderStatus: OrderStatus!
   bundles: BundleList!
-  shareLink: String!
+  shareLink: String
 }
 
 input OrderInput {
   bundles: [BundleInput!]!
-  store: String!
+  store: NodeId!
   requestedPickUpTime: String
 }
 
