@@ -44,7 +44,9 @@ type Customer implements Node & User {
 }
 
 type Mutation {
-  orderPickUp(pickUpCode: String!): Order
+  \\"\\"\\"
+  orderPickUp(pickUpCode: String!): Order # order status -> PICKED_UP (by ??)
+  \\"\\"\\"
   orderDecline(nodeId: NodeId!): Order
   orderAccept(nodeId: NodeId!): Order
   orderPlace(order: OrderInput): Order
@@ -81,8 +83,10 @@ type OrderList {
 }
 
 enum OrderStatus {
+  PENDING
   ACCEPTED
   REJECTED
+  READY_FOR_PICKUP
   PICKED_UP
 }
 
