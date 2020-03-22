@@ -10,7 +10,7 @@ export type ContentCardProps = {
 
 export function ContentCard({ children, header, footer }: ContentCardProps) {
   return (
-    <Box m={1} mb={2}>
+    <Box m={1} mb={3}>
       <Paper elevation={6}>
         { header ? header : <Box bgcolor="primary.main" height={2} />}
         <Box p={2.5}>{children}</Box>
