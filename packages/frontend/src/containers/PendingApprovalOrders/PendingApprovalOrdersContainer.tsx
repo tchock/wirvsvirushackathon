@@ -4,7 +4,6 @@ import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Order } from "../../../../types/order";
 import {
   APPROVE_ORDER,
-  DENY_ORDER,
   GET_PENDING_ORDERS
 } from "../../services/OrdersService";
 import { Snackbar } from "@material-ui/core";

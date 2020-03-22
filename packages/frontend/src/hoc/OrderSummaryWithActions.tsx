@@ -12,12 +12,12 @@ const OrderCardWrapper = styled(Paper)`
 `;
 
 const ActionsGrid = styled(Grid)`
-margin-top: ${getSpacing(2)}px;
+  margin-top: ${getSpacing(2)}px;
 `;
 
 type Props = {
   order: Order;
-  isEditMode: boolean;
+  isEditMode?: boolean;
 };
 export const OrderSummaryWithActions = ({
   children,
@@ -25,7 +25,7 @@ export const OrderSummaryWithActions = ({
 }: { children: any } & Props) => {
   return (
     <OrderCardWrapper elevation={2}>
-      <OrderSummary order={props.order} isEditMode={props.isEditMode}/>
+      <OrderSummary order={props.order} isEditMode={props.isEditMode} />
       <ActionsGrid container spacing={2}>
         {children}
       </ActionsGrid>

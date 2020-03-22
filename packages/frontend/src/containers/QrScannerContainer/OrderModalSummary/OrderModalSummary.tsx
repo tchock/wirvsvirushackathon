@@ -1,9 +1,11 @@
 import * as React from "react";
-import { GET_ORDER_BY_QR_CODE } from "../../../services/OrdersService";
-import { useQuery } from "@apollo/react-hooks";
+import {
+  GET_ORDER_BY_QR_CODE,
+  PICK_UP_ORDER
+} from "../../../services/OrdersService";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Button, Grid, Modal } from "@material-ui/core";
 import { Order } from "../../../../../types/order";
-import Paper from "@material-ui/core/Paper";
 import styled from "styled-components";
 import { OrderSummaryWithActions } from "../../../hoc/OrderSummaryWithActions";
 
@@ -15,41 +17,56 @@ const ModalWrapper = styled.div`
   padding: 16px;
 `;
 
-const SummaryWrapper = styled(Paper)`
-  width: 100%;
-  padding: 16px;
+const ModalStyled = styled(Modal)`
+  overflow: auto;
 `;
 
 type Props = {
   qrCode: string;
+  setQrCode: () => void;
+  show: boolean;
+  setShowModal: (show: boolean) => void;
 };
 export const OrderModalSummary = (props: Props) => {
+  console.log(props.qrCode);
   const { loading, error, data } = useQuery(GET_ORDER_BY_QR_CODE, {
     variables: { pickUpCode: props.qrCode }
   });
 
+  const [onPickUpOrder] = useMutation(PICK_UP_ORDER);
+
   if (loading || error) return null;
 
-  const order: Order = data.order;
+  const order: Order = data.orderByPickUpCode;
 
   return (
-    <Modal
+    <ModalStyled
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
-      open={true}
-      onClose={() => {}}
+      open={props.show}
+      onClose={() => props.setShowModal(false)}
     >
       <ModalWrapper>
-        <SummaryWrapper>
-          <OrderSummaryWithActions order={order}>
-            <Grid item xs={12}>
-              <Button fullWidth variant="contained" color="primary">
-                Pickup
-              </Button>
-            </Grid>
-          </OrderSummaryWithActions>
-        </SummaryWrapper>
+        <OrderSummaryWithActions order={order}>
+          <Grid item xs={12}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                onPickUpOrder({
+                  variables: { pickUpCode: order.pickUpCode }
+                }).then(() => {
+                  props.setShowModal(false);
+                  props.setQrCode("");
+                });
+              }}
+            >
+              Pickup
+            </Button>
+          </Grid>
+        </OrderSummaryWithActions>
       </ModalWrapper>
-    </Modal>
+    </ModalStyled>
   );
 };

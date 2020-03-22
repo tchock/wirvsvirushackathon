@@ -12,16 +12,15 @@ const QrContainer = styled.div`
   margin: 0 -${getSpacing(2)}px;
 `;
 export const QrScannerContainer = (props: Props) => {
-  const orderId = props.match.params.id;
-  const [qrCode, setQrCode] = React.useState("884d0801");
-
-  // 884d0801
+  const [qrCode, setQrCode] = React.useState("");
+  const [showModal, setShowModal] = React.useState(false);
 
   const handleError = error => console.log(error);
   const handleScan = data => {
     if (data) {
       console.log(data);
       setQrCode(data);
+      setShowModal(true);
     }
   };
 
@@ -35,7 +34,14 @@ export const QrScannerContainer = (props: Props) => {
           style={{ width: "100%" }}
         />
       </QrContainer>
-      {qrCode ? <OrderModalSummary qrCode={qrCode} /> : null}
+      {qrCode ? (
+        <OrderModalSummary
+          qrCode={qrCode}
+          setQrCode={setQrCode}
+          show={showModal}
+          setShowModal={setShowModal}
+        />
+      ) : null}
     </>
   );
 };

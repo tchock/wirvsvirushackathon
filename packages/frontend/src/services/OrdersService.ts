@@ -86,38 +86,10 @@ const orderFragment = `
 `;
 
 export const GET_ORDER_BY_QR_CODE = gql`
-  query {
-    orders(audience: STORE, orderStatus: ACCEPTED) {
-      nodes (filter: {pickUpCode: "884d0801"}){
-        nodeId
-        pickUpCode
-        confirmedPickUpTime
-        requestedPickUpTime
-        store {
-          nodeId
-          type
-        }
-        customer {
-          nodeId
-          type
-        }
-        orderStatus
-        bundles {
-          nodes {
-            nodeId
-            items {
-              nodes {
-                quantity
-                price
-                name
-                unit
-              }
-            }
-          }
-        }
-        shareLink
+  query orderByPickUpCode($pickUpCode: String!) {
+      orderByPickUpCode (pickUpCode: $pickUpCode) {
+          ${orderFragment}
       }
-    }
   }
 `;
 
