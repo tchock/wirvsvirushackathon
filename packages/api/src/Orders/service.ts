@@ -1,5 +1,4 @@
-// import * as repository from './repository';
-import * as mocks from './mockData';
+import * as repository from './repository';
 import { OrderStatus, Audiences } from 'types/order';
 import { UserInfo } from '../graphql/types';
 
@@ -14,9 +13,9 @@ export type getOrdersInput = {
 };
 
 export async function getOrderByNodeId(args: getOrderInput, user: UserInfo) {
-  return mocks.getOrderByNodeId(args);
+  return repository.getOrder(args.nodeId, user.sub, args.audience);
 }
 
 export async function getOrders(args: getOrdersInput, user: UserInfo) {
-  return mocks.getOrders(args);
+  return repository.getOrders(user.sub, args.audience, args.orderStatus);
 }

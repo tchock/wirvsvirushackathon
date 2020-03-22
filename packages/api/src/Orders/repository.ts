@@ -1,5 +1,5 @@
 import * as AWS from 'aws-sdk';
-import { Order, Audiences } from 'types/order';
+import { Order, Audiences, OrderStatus } from 'types/order';
 import config from '../../config';
 
 enum DocumentTypes {
@@ -12,9 +12,9 @@ type Document<T> = {
   GSI_PK: string;
   GSI_SK: string;
   GSI_PK_2: string;
-  ItemType: DocumentTypes,
-  payload: T,
-}
+  ItemType: DocumentTypes;
+  payload: T;
+};
 
 const tableName = process.env.DB_TABLE_MAIN;
 
@@ -40,8 +40,8 @@ export async function upsertOrder(order: Order): Promise<Order> {
       GSI_PK_2: `pickUpCode_${order.pickUpCode}`,
       ItemType: DocumentTypes.ORDER,
       payload: order,
-    } as Document<Order>
-  }
+    } as Document<Order>,
+  };
 
   await documentClient.put(params).promise();
   return order;
@@ -52,7 +52,7 @@ export async function getOrder(
   userId: string,
   userType: Audiences
 ): Promise<Order> {
-  switch(userType) {
+  switch (userType) {
     case Audiences.CUSTOMER:
       return getOrderForCustomer(nodeId, userId);
     case Audiences.STORE:
@@ -62,13 +62,14 @@ export async function getOrder(
 
 export async function getOrders(
   userId: string,
-  userType: Audiences
+  userType: Audiences,
+  orderStatus?: OrderStatus
 ): Promise<Order[]> {
-  switch(userType) {
+  switch (userType) {
     case Audiences.CUSTOMER:
-      return getOrdersForCustomer(userId);
+      return getOrdersForCustomer(userId, orderStatus);
     case Audiences.STORE:
-      return getOrdersForStore(userId);
+      return getOrdersForStore(userId, orderStatus);
   }
 }
 
@@ -82,7 +83,7 @@ export async function getOrderByPickUpCode(pickUpCode) {
     },
   };
 
-  return await documentClient.query(params).promise();
+  return documentClient.query(params).promise();
 }
 
 async function getOrderForStore(userId: string, nodeId: string) {
@@ -91,73 +92,75 @@ async function getOrderForStore(userId: string, nodeId: string) {
     Key: {
       PK: userId,
       SK: nodeId,
-    }
-  }
-  const result = await documentClient
-    .get(params)
-    .promise();
+    },
+  };
+  const result = await documentClient.get(params).promise();
   return result.Item as Order;
 }
 
-async function getOrderForCustomer(
-  nodeId: string,
-  userId: string,
-) {
+async function getOrderForCustomer(nodeId: string, userId: string) {
   const orders = await queryOrders<Order>(
     'GSI_PK = :userId and GSI_SK = :nodeId',
     {
       ':userId': `userId_${userId}`,
       ':nodeId': `orderId_${nodeId}`,
     },
-    config.GSI_INDEX_NAME,
+    config.GSI_INDEX_NAME
   );
 
-  return orders[0].payload;
+  return orders[0] && orders[0].payload;
 }
 
-async function getOrdersForCustomer(userId: string) {
-  return (await queryOrders<Order>(
-    'GSI_PK = :userId',
-    {
-      ':userId': `userId_${userId}`,
-    },
-    config.GSI_INDEX_NAME,
-  )).map(orderDocument => orderDocument.payload);
+async function getOrdersForCustomer(userId: string, orderStatus?: OrderStatus) {
+  return (
+    await queryOrders<Order>(
+      'GSI_PK = :userId',
+      {
+        ':userId': `userId_${userId}`,
+      },
+      config.GSI_INDEX_NAME,
+      orderStatus
+    )
+  ).map(orderDocument => orderDocument.payload);
 }
 
-async function getOrdersForStore(userId: string) {
-  return (await queryOrders<Order>(
-    'PK = :userId',
-    {
-      ':userId': `userId_${userId}`,
-    },
-  )).map(orderDocument => orderDocument.payload);
+async function getOrdersForStore(userId: string, orderStatus?: OrderStatus) {
+  return (
+    await queryOrders<Order>(
+      'PK = :userId',
+      {
+        ':userId': `userId_${userId}`,
+      },
+      null,
+      orderStatus
+    )
+  ).map(orderDocument => orderDocument.payload);
 }
 
 async function queryOrders<T>(
   keyCondition: string,
-  expression: Record<string, string|number>,
+  expression: Record<string, string | number>,
   index?: string,
+  orderStatus?: OrderStatus
 ) {
   const params: AWS.DynamoDB.DocumentClient.QueryInput = {
     TableName: tableName,
     KeyConditionExpression: keyCondition,
-    ExpressionAttributeValues: expression
+    ExpressionAttributeValues: expression,
+  };
+
+  if (orderStatus) {
+    params.FilterExpression = 'payload.orderStatus = :orderStatus';
+    params.ExpressionAttributeValues[':orderStatus'] = orderStatus;
   }
 
   if (index) {
     params.IndexName = index;
   }
 
-  const result = await documentClient
-    .query(params)
-    .promise();
+  const result = await documentClient.query(params).promise();
 
-  const items = result.Items
-
-  if (items.length === 0) {
-    throw new Error('Record not found');
-  }
+  const items = result.Items;
 
   return items as Document<T>[];
 }

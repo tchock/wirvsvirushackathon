@@ -1,0 +1,17 @@
+ARN_CERTIFICATE: "tbd"
+ARN_DB_UPLOAD_STREAM: "tbd"
+
+DB_TABLE_MAIN: test-main
+DB_ENDPOINT: "http://127.0.0.1:8000"
+GSI_2_INDEX_NAME: "gsi-pk-2-index"
+GSI_INDEX_NAME: "gsi-pk-gsi-sk-index"
+
+DOMAIN_NAME_API: api.local.tbd.io
+DOMAIN_NAME_WEB_APP: local.tbd.io
+
+LOGGER_LEVEL: ${env:LOGGER_LEVEL,"verbose"}
+
+NODE_ENV: production
+STAGE: local
+SERVERLESS_STAGE: local
+SERVERLESS_REGION: us-east-1
