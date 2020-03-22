@@ -46,7 +46,7 @@ export async function createOrder(args: OrderInput, user: UserInfo): Promise<Ord
     customer: {
       nodeId: user.sub,
     },
-    orderStatus: null,
+    orderStatus: OrderStatus.PENDING,
     requestedPickUpTime: args.requestedPickUpTime,
     pickUpCode: createFirstSegmentOfUuid(),
     store: {
