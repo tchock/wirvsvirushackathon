@@ -6,12 +6,19 @@ import {
   PICK_UP_ORDER
 } from "../../services/OrdersService";
 import { Order } from "../../../../types/order";
+import { withRouter } from "react-router";
 
-type Props = {};
-
-export const AcceptedOrdersContainer = (props: Props) => {
+type Props = {
+  history: any;
+};
+// /admin/pickup/:id
+const AcceptedOrdersContainer = (props: Props) => {
   const { loading, error, data } = useQuery(GET_ACCEPTED_ORDERS);
   const [onPickUpOrder] = useMutation(PICK_UP_ORDER);
+
+  // onPickUpOrder({
+  //   variables: { pickUpCode: order.pickUpCode }
+  // })
 
   if (loading || error) return null;
 
@@ -21,10 +28,10 @@ export const AcceptedOrdersContainer = (props: Props) => {
     <SingleAcceptedOrder
       order={order}
       onPickedUpConfirmed={() =>
-        onPickUpOrder({
-          variables: { pickUpCode: order.pickUpCode }
-        })
+        props.history.push(`/admin/pickup/${order.nodeId}`)
       }
     />
   ));
 };
+
+export default withRouter(AcceptedOrdersContainer);

@@ -17,13 +17,15 @@ import {
 } from "../OrderSummary";
 import { PacketIcon } from "../../Icons/PacketIcon";
 import { getSpacing } from "../../../theme";
+import { useMutation } from "@apollo/react-hooks";
+import { APPROVE_ORDER } from "../../../services/OrdersService";
 
 const ButtonIcon = styled(Button)`
   padding: 0;
 `;
 
 const TimeDatePickerWrapper = styled.div`
-  margin-top: -${getSpacing(.5)}px;
+  margin-top: -${getSpacing(0.5)}px;
 
   *::before {
     content: none;
@@ -103,7 +105,7 @@ export const OrderSummaryEditable = (props: Props) => {
                     {item.quantity} {item.unit} {item.name}
                   </Grid>
                   <Grid item xs={1}>
-                    <ButtonIcon onClick={() => console.log("asdasd")}>
+                    <ButtonIcon>
                       <HighlightOffOutlinedIcon color="secondary" />
                     </ButtonIcon>
                   </Grid>

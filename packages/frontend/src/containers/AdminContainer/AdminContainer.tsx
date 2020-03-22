@@ -1,12 +1,13 @@
 import * as React from "react";
 import { Route, withRouter } from "react-router";
 import { Switch } from "react-router-dom";
-import { AcceptedOrdersContainer } from "../AcceptedOrders/AcceptedOrdersContainer";
+import AcceptedOrdersContainer from "../AcceptedOrders/AcceptedOrdersContainer";
 import styled from "styled-components";
 import { AppBar, Tab, Tabs } from "@material-ui/core";
 import { ReadyOrdersContainer } from "../ReadyOrdersContainer/ReadyOrdersContainer";
 import { PendingApprovalOrdersContainer } from "../PendingApprovalOrders/PendingApprovalOrdersContainer";
 import { getSpacing } from "../../theme";
+import { PickUpOrderContainer } from "../PickUpOrderContainer/PickUpOrderContainer";
 
 const AdminContainerWrapper = styled.div``;
 
@@ -40,6 +41,7 @@ const AdminContainer = (props: Props) => {
         <Switch>
           <Route path="/admin/accepted" component={AcceptedOrdersContainer} />
           <Route path="/admin/ready" component={ReadyOrdersContainer} />
+          <Route path="/admin/pickup/:id" component={PickUpOrderContainer} />
           <Route path="/admin" component={PendingApprovalOrdersContainer} />
         </Switch>
       </ContentContainer>

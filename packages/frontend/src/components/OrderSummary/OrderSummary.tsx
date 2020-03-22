@@ -28,7 +28,7 @@ export const BundleIconListItem = styled(IconListItem)`
 
 type Props = {
   order: Order;
-  isEditMode: boolean;
+  isEditMode?: boolean;
 };
 export const OrderSummary = (props: Props) => {
   const totalPrice = getOrderTotalPrice(props.order);
