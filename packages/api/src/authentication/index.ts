@@ -28,12 +28,11 @@ const subs = {
   store: 'storeId',
 };
 
-function fakeAuth(headers) {
-  const subMapKey = headers.authorization || 'customer';
+function fakeAuth(token = 'customer') {
   return {
     user: {
       iss: 'https://outofthebox.eu.auth0.com/',
-      sub: subs[subMapKey],
+      sub: subs[token],
       aud: ['api.outofthebox.com', 'https://outofthebox.eu.auth0.com/userinfo'],
       iat: 1579344887,
       exp: 1579352087,
@@ -45,7 +44,7 @@ function fakeAuth(headers) {
 }
 
 async function lambdaMiddleware({ event: { headers } }) {
-  return fakeAuth(headers);
+  return fakeAuth(headers.Authorization || headers.authorization);
   // return authenticateHeader(headers.Authorization || headers.authorization);
 }
 
