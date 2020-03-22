@@ -99,8 +99,12 @@ const typeDef = /* GraphQL */ `
   }
 
   input BundleItemInput {
-    nodeId: NodeId!
+    nodeId: NodeId! # NOT any PK + SK
     quantity: Float!
+    # once we handle bundles on the server side we should drop all these for placing an order
+    price: Float!
+    name: String!
+    unit: String!
   }
 
   interface User {
