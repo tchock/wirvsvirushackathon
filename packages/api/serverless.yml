@@ -41,11 +41,11 @@ provider:
     - Effect: 'Allow'
       Action:
         - dynamodb:Query
-      Resource: 'arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.config.DB_TABLE_MAIN}/index/${self.custom.config.GSI_INDEX_NAME}'
+      Resource: 'arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.config.DB_TABLE_MAIN}/index/${self:custom.config.GSI_INDEX_NAME}'
     - Effect: 'Allow'
       Action:
         - dynamodb:Query
-      Resource: 'arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.config.DB_TABLE_MAIN}/index/${self.custom.config.GSI_2_INDEX_NAME}'
+      Resource: 'arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.config.DB_TABLE_MAIN}/index/${self:custom.config.GSI_2_INDEX_NAME}'
 functions:
   app:
     handler: src/index.handler
