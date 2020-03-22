@@ -46,7 +46,8 @@ function OrderItem({ order }) {
 
 function getActionButton(order) {
   return (
-    <Button 
+    <Button
+      disableElevation
       component={Link}
       to={`/account/order/${order.nodeId}`}
       size="large"
