@@ -104,14 +104,6 @@ export const DENY_ORDER = gql`
   }
 `;
 
-export const placeOrder = orderId => gql`
-  mutation {
-    orderPlace(nodeId: "${orderId}") {
-      nodeId
-    }
-  }
-`;
-
 export const PICK_UP_ORDER = gql`
   mutation orderPickUp($pickUpCode: String!) {
     orderPickUp(pickUpCode: $pickUpCode) {

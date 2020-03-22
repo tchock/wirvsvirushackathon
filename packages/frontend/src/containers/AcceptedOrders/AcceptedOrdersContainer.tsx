@@ -12,10 +12,6 @@ import { Order } from "../../../../types/order";
 
 type Props = {};
 
-const onPaidConfirmed = () => {
-  console.log("paid");
-};
-
 export const AcceptedOrdersContainer = (props: Props) => {
   const { loading, error, data } = useQuery(GET_ACCEPTED_ORDERS);
   const [onPickUpOrder] = useMutation(PICK_UP_ORDER);
@@ -40,7 +36,6 @@ export const AcceptedOrdersContainer = (props: Props) => {
       {orders.map(order => (
         <SingleAcceptedOrder
           order={order}
-          onPaidConfirmed={onPaidConfirmed}
           onPickedUpConfirmed={() =>
             onPickUpOrder({
               variables: { pickUpCode: order.pickUpCode }
