@@ -6,6 +6,7 @@ import {
   acceptOrder,
   declineOrder,
   pickupOrder,
+  getOrderByPickUpCode,
 } from './service';
 import { ResolverContext } from '../graphql/types';
 
