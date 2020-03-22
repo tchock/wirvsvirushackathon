@@ -3,16 +3,30 @@ import { Route, withRouter } from "react-router";
 import { Switch } from "react-router-dom";
 import AcceptedOrdersContainer from "../AcceptedOrders/AcceptedOrdersContainer";
 import styled from "styled-components";
-import { AppBar, Tab, Tabs } from "@material-ui/core";
-import { ReadyOrdersContainer } from "../ReadyOrdersContainer/ReadyOrdersContainer";
+import {
+  AppBar,
+  BottomNavigation,
+  BottomNavigationAction,
+  Tab,
+  Tabs
+} from "@material-ui/core";
 import { PendingApprovalOrdersContainer } from "../PendingApprovalOrders/PendingApprovalOrdersContainer";
 import { getSpacing } from "../../theme";
-import { PickUpOrderContainer } from "../PickUpOrderContainer/PickUpOrderContainer";
+import { QrScannerContainer } from "../QrScannerContainer/QrScannerContainer";
+import CameraAltOutlinedIcon from "@material-ui/icons/CameraAltOutlined";
 
 const AdminContainerWrapper = styled.div``;
 
 const ContentContainer = styled.div`
   padding: 0 ${getSpacing(2)}px;
+  margin-bottom: ${getSpacing(20)}px;
+`;
+
+const BottomNavigationWrapper = styled.div`
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
 `;
 
 type Props = {
@@ -34,17 +48,30 @@ const AdminContainer = (props: Props) => {
         >
           <Tab label="New" value="/admin" />
           <Tab label="Accepted" value="/admin/accepted" />
-          <Tab label="Ready" value="/admin/ready" />
         </Tabs>
       </AppBar>
       <ContentContainer>
         <Switch>
           <Route path="/admin/accepted" component={AcceptedOrdersContainer} />
-          <Route path="/admin/ready" component={ReadyOrdersContainer} />
-          <Route path="/admin/pickup/:id" component={PickUpOrderContainer} />
+          <Route path="/admin/scanner" component={QrScannerContainer} />
           <Route path="/admin" component={PendingApprovalOrdersContainer} />
         </Switch>
       </ContentContainer>
+      <BottomNavigationWrapper>
+        <BottomNavigation
+          value={props.location.pathname}
+          onChange={(event, value) => {
+            props.history.push(value);
+          }}
+          showLabels
+        >
+          <BottomNavigationAction
+            label="Camera Scan"
+            icon={<CameraAltOutlinedIcon />}
+            value="/admin/scanner"
+          />
+        </BottomNavigation>
+      </BottomNavigationWrapper>
     </AdminContainerWrapper>
   );
 };

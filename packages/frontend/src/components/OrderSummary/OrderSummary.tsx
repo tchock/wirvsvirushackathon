@@ -38,7 +38,7 @@ export const OrderSummary = (props: Props) => {
   ) : (
     <OrderSummaryWrapper>
       <Typography paragraph variant="h5">
-        Order# {props.order.nodeId}
+        Order# {props.order.nodeId.slice(-8)}
       </Typography>
       <ListTitle>
         <Typography color="textSecondary">Pick up date:</Typography>
@@ -51,7 +51,7 @@ export const OrderSummary = (props: Props) => {
       </ListTitle>
       <Grid container>
         <Grid xs={6} item>
-          {props.order.bundles.nodes.map(bundle =>
+          {props.order.bundles.nodes.map((bundle) =>
             bundle.items.nodes.map(item => (
               <BundleIconListItem icon={PacketIcon}>
                 {item.quantity} {item.unit} {item.name}

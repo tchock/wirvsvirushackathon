@@ -47,7 +47,7 @@ export const OrderSummaryEditable = (props: Props) => {
   return (
     <OrderSummaryWrapper>
       <Typography paragraph variant="h5">
-        Order# {order.nodeId}
+        Order# {order.nodeId.slice(-8)}
       </Typography>
       <IconListItem icon={FingerprintIcon}>
         <Typography color="textSecondary">
