@@ -34,13 +34,11 @@ const AdminContainer = (props: Props) => {
         >
           <Tab label="New" value="/admin" />
           <Tab label="Accepted" value="/admin/accepted" />
-          <Tab label="Ready" value="/admin/ready" />
         </Tabs>
       </AppBar>
       <ContentContainer>
         <Switch>
           <Route path="/admin/accepted" component={AcceptedOrdersContainer} />
-          <Route path="/admin/ready" component={ReadyOrdersContainer} />
           <Route path="/admin/pickup/:id" component={PickUpOrderContainer} />
           <Route path="/admin" component={PendingApprovalOrdersContainer} />
         </Switch>
