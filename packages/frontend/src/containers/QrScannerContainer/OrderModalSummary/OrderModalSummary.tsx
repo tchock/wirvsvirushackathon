@@ -32,8 +32,6 @@ export const OrderModalSummary = (props: Props) => {
 
   const order: Order = data.order;
 
-  console.log(order);
-
   return (
     <Modal
       aria-labelledby="simple-modal-title"

@@ -6,6 +6,7 @@ import { Order } from "../../../../../types/order";
 type Props = {
   order: Order;
   onApproveOrder: () => void;
+  onRejectOrder: () => void;
 };
 export const SinglePendingOrder = (props: Props) => {
   const [isEditMode, setEditMode] = React.useState(false);
@@ -38,7 +39,7 @@ export const SinglePendingOrder = (props: Props) => {
       ) : (
         <>
           <Grid item xs={6}>
-            <Button fullWidth variant="contained" color="secondary">
+            <Button fullWidth variant="contained" color="secondary" onClick={props.onRejectOrder}>
               Reject
             </Button>
           </Grid>

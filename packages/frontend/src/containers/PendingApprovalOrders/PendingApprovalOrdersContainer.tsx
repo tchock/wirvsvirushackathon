@@ -4,10 +4,12 @@ import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Order } from "../../../../types/order";
 import {
   APPROVE_ORDER,
+  DENY_ORDER,
   GET_PENDING_ORDERS
 } from "../../services/OrdersService";
 import { Snackbar } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
+import { RejectOrderModal } from "./RejectOrderModal/RejectOrderModal";
 
 type Props = {};
 
@@ -15,8 +17,10 @@ export const PendingApprovalOrdersContainer = (props: Props) => {
   const { loading, error, data, refetch } = useQuery(GET_PENDING_ORDERS);
   const [onApproveOrder] = useMutation(APPROVE_ORDER);
   const [showAlert, setShowAlert] = React.useState(false);
+  const [showRejectModal, setShowRejectModal] = React.useState(false);
+  const [rejectedOrderId, setRejectedOrderId] = React.useState("");
 
-  if (loading) return null;
+  if (loading || error) return null;
 
   const orders: Order[] = data.orders.nodes;
 
@@ -26,6 +30,10 @@ export const PendingApprovalOrdersContainer = (props: Props) => {
         <SinglePendingOrder
           order={order}
           key={order.nodeId}
+          onRejectOrder={() => {
+            setRejectedOrderId(order.nodeId);
+            setShowRejectModal(true);
+          }}
           onApproveOrder={() => {
             onApproveOrder({
               variables: { nodeId: order.nodeId }
@@ -49,6 +57,16 @@ export const PendingApprovalOrdersContainer = (props: Props) => {
           The order has been accepted!
         </MuiAlert>
       </Snackbar>
+      {rejectedOrderId && (
+        <RejectOrderModal
+          show={showRejectModal}
+          orderId={rejectedOrderId}
+          closeModal={() => {
+            setShowRejectModal(false);
+            refetch();
+          }}
+        />
+      )}
     </>
   );
 };
