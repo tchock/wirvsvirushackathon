@@ -1,36 +1,40 @@
 import * as React from "react";
-import { Button, Grid, Paper } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Button, Grid } from "@material-ui/core";
 import { OrderSummaryWithActions } from "../../../hoc/OrderSummaryWithActions";
 
 type Props = {
   order: any;
 };
 export const SinglePendingOrder = (props: Props) => {
+  const [isEditMode, setEditMode] = React.useState(false);
+
   return (
-    <OrderSummaryWithActions order={props.order}>
-      <Grid item md={6} xs={12}>
-        <Link
-          to={`/admin/pending/${props.order.nodeId}/approve`}
-          fullWidth
-          variant="contained"
-          color="primary"
-          component={Button}
-        >
-          Accept Order
-        </Link>
-      </Grid>
-      <Grid item md={6} xs={12}>
-        <Link
-          to={`/admin/pending/${props.order.nodeId}/deny`}
-          fullWidth
-          variant="contained"
-          color="secondary"
-          component={Button}
-        >
-          Deny Order
-        </Link>
-      </Grid>
+    <OrderSummaryWithActions order={props.order} isEditMode={isEditMode}>
+      {isEditMode ? (
+        <Grid item xs={12}>
+          <Button fullWidth variant="contained" color="primary">
+            Accept
+          </Button>
+        </Grid>
+      ) : (
+        <>
+          <Grid item xs={6}>
+            <Button fullWidth variant="contained" color="secondary">
+              Reject
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={() => setEditMode(true)}
+            >
+              Review
+            </Button>
+          </Grid>
+        </>
+      )}
     </OrderSummaryWithActions>
   );
 };

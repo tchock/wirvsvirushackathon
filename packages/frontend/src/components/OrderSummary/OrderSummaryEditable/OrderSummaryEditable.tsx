@@ -2,12 +2,11 @@ import * as React from "react";
 import { Typography, Grid } from "@material-ui/core";
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import styled from "styled-components";
-import { Order } from "../../../../types/order";
-import { getSpacing } from "../../theme";
+import { Order } from "../../../../../types/order";
+import { getSpacing } from "../../../theme";
 import { FormattedNumber } from "react-intl";
-import { IconListItem } from "../IconListItem";
-import { OrderSummaryEditable } from "./OrderSummaryEditable/OrderSummaryEditable";
-import { getOrderTotalPrice } from '../../utils';
+import { IconListItem } from "../../IconListItem";
+import { getOrderTotalPrice } from "../../../utils";
 
 const OrderSummaryWrapper = styled.div``;
 
@@ -23,14 +22,11 @@ const ListTitle = styled.div`
 
 type Props = {
   order: Order;
-  isEditMode: boolean;
 };
-export const OrderSummary = (props: Props) => {
+export const OrderSummaryEditable = (props: Props) => {
   const totalPrice = getOrderTotalPrice(props.order);
 
-  return props.isEditMode ? (
-    <OrderSummaryEditable order={props.order} />
-  ) : (
+  return (
     <OrderSummaryWrapper>
       <Typography paragraph variant="h5">
         Order# {props.order.pickUpCode}

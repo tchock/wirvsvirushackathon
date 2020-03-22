@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { Box, MuiThemeProvider, StylesProvider } from "@material-ui/core";
-import { AdminContainer } from "./containers/AdminContainer/AdminContainer";
+import AdminContainer from "./containers/AdminContainer/AdminContainer";
 import { GlobalStyle, THEME } from "./theme";
 import { IntlProvider } from "react-intl";
 import { App } from "./containers/App";
@@ -18,10 +18,10 @@ const Wrapper = () => (
           <ThemeProvider theme={THEME}>
             <GlobalStyle />
             <BrowserRouter>
-                <Switch>
-                  <Route path="/admin" component={AdminContainer} />
-                  <Route path="/" component={App} />
-                </Switch>
+              <Switch>
+                <Route path="/admin" component={AdminContainer} />
+                <Route path="/" component={App} />
+              </Switch>
             </BrowserRouter>
           </ThemeProvider>
         </MuiThemeProvider>
