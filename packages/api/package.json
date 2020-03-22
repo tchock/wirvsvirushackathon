@@ -47,6 +47,7 @@
     "tslint": "5.20.1",
     "types": "workspace:packages/types",
     "typescript": "^3.8.3",
+    "uuid": "^7.0.2",
     "webpack": "4.42.0",
     "webpack-graphql-loader": "0.1.2",
     "webpack-merge": "4.2.2"
@@ -55,6 +56,7 @@
     "@types/jest": "^25.1.4",
     "@types/jsonwebtoken": "8.3.8",
     "@types/serverless": "1.18.6",
+    "@types/uuid": "7.0.2",
     "jest": "^25.1.0",
     "ts-jest": "^25.2.1"
   },

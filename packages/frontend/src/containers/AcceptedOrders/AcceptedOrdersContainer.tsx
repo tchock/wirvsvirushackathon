@@ -3,51 +3,46 @@ import { SingleAcceptedOrder } from "./SingleAcceptedOrder/SingleAcceptedOrder";
 import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { TopNavigation } from "../../components/TopAdminNavigation/TopAdminNavigation";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import {
+  GET_ACCEPTED_ORDERS,
+  PICK_UP_ORDER
+} from "../../services/OrdersService";
+import { Order } from "../../../../types/order";
 
 type Props = {};
-type State = {};
 
-const SAMPLE_ORDERS = [
-  {
-    pickUpCode: "#1111",
-    name: "bundle extreme",
-    pickUpTime: "13:00 H",
-    bundleId: "#11314",
-    price: "5.00"
-  }
-];
+export const AcceptedOrdersContainer = (props: Props) => {
+  const { loading, error, data } = useQuery(GET_ACCEPTED_ORDERS);
+  const [onPickUpOrder] = useMutation(PICK_UP_ORDER);
 
-export class AcceptedOrdersContainer extends React.Component<Props, State> {
-  onPaidConfirmed = () => {
-    console.log("paid");
-  };
+  if (loading) return null;
 
-  onPickedUpConfirmed = () => {
-    console.log("pickedup");
-  };
+  const orders: Order[] = data.orders.nodes;
 
-  render() {
-    return (
-      <>
-        <TopNavigation>
-          <Link
-            to="/admin/pending"
-            component={Button}
-            fullWidth={true}
-            variant="contained"
-            color="default"
-          >
-            Pending Approval Orders
-          </Link>
-        </TopNavigation>
-        {SAMPLE_ORDERS.map(order => (
-          <SingleAcceptedOrder
-            order={order}
-            onPaidConfirmed={this.onPaidConfirmed}
-            onPickedUpConfirmed={this.onPickedUpConfirmed}
-          />
-        ))}
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <TopNavigation>
+        <Link
+          to="/admin/pending"
+          component={Button}
+          fullWidth={true}
+          variant="contained"
+          color="default"
+        >
+          Pending Approval Orders
+        </Link>
+      </TopNavigation>
+      {orders.map(order => (
+        <SingleAcceptedOrder
+          order={order}
+          onPickedUpConfirmed={() =>
+            onPickUpOrder({
+              variables: { pickUpCode: order.pickUpCode }
+            })
+          }
+        />
+      ))}
+    </>
+  );
+};

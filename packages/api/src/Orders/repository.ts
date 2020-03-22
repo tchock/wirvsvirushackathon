@@ -12,6 +12,7 @@ type Document<T> = {
   GSI_PK: string;
   GSI_SK: string;
   GSI_PK_2: string;
+  GSI_SK_2: string;
   ItemType: DocumentTypes;
   payload: T;
 };
@@ -37,7 +38,8 @@ export async function upsertOrder(order: Order): Promise<Order> {
       SK: `orderId_${orderId}`,
       GSI_PK: `userId_${userId}`,
       GSI_SK: `orderId_${orderId}`,
-      GSI_PK_2: `pickUpCode_${order.pickUpCode}`,
+      GSI_PK_2: `storeId_${storeId}`,
+      GSI_SK_2: `pickUpCode_${order.pickUpCode}`,
       ItemType: DocumentTypes.ORDER,
       payload: order,
     } as Document<Order>,
@@ -57,6 +59,8 @@ export async function getOrder(
       return getOrderForCustomer(nodeId, userId);
     case Audiences.STORE:
       return getOrderForStore(nodeId, userId);
+    default:
+      throw new Error('Unreachable');
   }
 }
 
@@ -70,15 +74,18 @@ export async function getOrders(
       return getOrdersForCustomer(userId, orderStatus);
     case Audiences.STORE:
       return getOrdersForStore(userId, orderStatus);
+    default:
+      throw new Error('Unreachable');
   }
 }
 
-export async function getOrderByPickUpCode(pickUpCode) {
+export async function getOrderByPickUpCode(pickUpCode: string, storeId: string) {
   const params: AWS.DynamoDB.DocumentClient.QueryInput = {
     TableName: tableName,
     IndexName: config.GSI_2_INDEX_NAME,
-    KeyConditionExpression: 'GSI_PK_2 = :pickUpCode',
+    KeyConditionExpression: 'GSI_PK_2 = :storeId and GSI_SK_2 = :pickUpCode',
     ExpressionAttributeValues: {
+      ':storeId': `storeId_${storeId}`,
       ':pickUpCode': `pickUpCode_${pickUpCode}`,
     },
   };
@@ -158,9 +165,5 @@ async function queryOrders<T>(
     params.IndexName = index;
   }
 
-  const result = await documentClient.query(params).promise();
-
-  const items = result.Items;
-
-  return items as Document<T>[];
+  return (await documentClient.query(params).promise()).Items;
 }

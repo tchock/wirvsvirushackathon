@@ -15,7 +15,7 @@ export interface Order extends Node {
   customer: Customer;
   orderStatus: OrderStatus;
   bundles: BundleList;
-  shareLink: string;
+  shareLink?: string;
 }
 
 export interface Store extends Node {}
@@ -45,7 +45,7 @@ export enum Audiences {
 export interface OrderInput {
   bundles: BundleList;
   store: string;
-  requestedPickUpTime: string;
+  requestedPickUpTime?: string;
 }
 
 export type BundleList = List<Bundle>;
