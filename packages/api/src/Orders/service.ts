@@ -43,8 +43,13 @@ export async function pickupOrder(args, user: UserInfo) {
   const order = await repository.getOrderByPickUpCode(args.pickUpCode, user.sub);
 
   order.orderStatus = OrderStatus.PICKED_UP;
+  order.pickUpCode = null;
 
   return repository.upsertOrder(order);
+}
+
+export async function getOrderByPickUpCode(args, user: UserInfo) {
+  return repository.getOrderByPickUpCode(args.pickUpCode, user.sub);
 }
 
 export async function createOrder(args: OrderInput, user: UserInfo): Promise<Order> {

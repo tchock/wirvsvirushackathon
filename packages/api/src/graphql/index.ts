@@ -7,6 +7,7 @@ const typeDef = /* GraphQL */ `
   type Query {
     orders(audience: Audiences!, orderStatus: OrderStatus): OrderList
     order(audience: Audiences!, nodeId: NodeId!): Order
+    orderByPickUpCode(pickUpCode: String!): Order # order status -> PICKED_UP (by store owner - he receives the pickup code from the customer)
   }
 
   type Mutation {
@@ -45,7 +46,7 @@ const typeDef = /* GraphQL */ `
 
   type Order implements Node {
     nodeId: NodeId!
-    pickUpCode: String!
+    pickUpCode: String
     confirmedPickUpTime: String # ISO8601
     requestedPickUpTime: String # ISO8601
     store: Store!
@@ -129,6 +130,7 @@ const resolvers = {
   Query: {
     orders: asPaginationResolver(Order.orders),
     order: Order.order,
+    orderByPickUpCode: Order.orderByPickUpCode,
   },
   Mutation: {
     orderPlace: Order.orderPlace,
