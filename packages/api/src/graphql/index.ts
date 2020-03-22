@@ -22,8 +22,10 @@ const typeDef = /* GraphQL */ `
   }
 
   enum OrderStatus {
+    PENDING
     ACCEPTED
     REJECTED
+    READY_FOR_PICKUP
     PICKED_UP
   }
 

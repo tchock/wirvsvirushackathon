@@ -32,7 +32,9 @@ export interface Item extends Node {
 }
 
 export enum OrderStatus {
+  PENDING = 'PENDING',
   ACCEPTED = 'ACCEPTED',
+  READY_FOR_PICKUP = 'READY_FOR_PICKUP',
   PICKED_UP = 'PICKED_UP',
   REJECTED = 'REJECTED',
 }
