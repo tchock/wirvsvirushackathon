@@ -22,6 +22,23 @@ export async function getOrders(args: getOrdersInput, user: UserInfo) {
   return repository.getOrders(user.sub, args.audience, args.orderStatus);
 }
 
+export async function acceptOrder(args, user: UserInfo) {
+  const order = await repository.getOrder(args.nodeId, user.sub, Audiences.STORE);
+
+  order.orderStatus = OrderStatus.ACCEPTED;
+
+  return repository.upsertOrder(order);
+}
+
+export async function declineOrder(args, user: UserInfo) {
+  const order = await repository.getOrder(args.nodeId, user.sub, Audiences.STORE);
+
+  order.orderStatus = OrderStatus.REJECTED;
+  order.rejectionReason = args.reason;
+
+  return repository.upsertOrder(order);
+}
+
 export async function createOrder(args: OrderInput, user: UserInfo): Promise<Order> {
   const order: Order = {
     nodeId: uuid.v4(),
