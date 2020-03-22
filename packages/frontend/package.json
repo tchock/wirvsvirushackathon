@@ -2,7 +2,9 @@
   "name": "frontend",
   "private": true,
   "scripts": {
-    "start": "yarn node server.js"
+    "start": "yarn node server.js",
+    "build": "webpack --config webpack.config.prod.js",
+    "deploy": "ci-helper deploy bucket web_app --route=/ --source=/dist"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",
@@ -48,6 +50,7 @@
     "@typescript-eslint/parser": "2.24.0",
     "babel-loader": "8.0.6",
     "babel-plugin-styled-components": "^1.10.7",
+    "ci-helper": "workspace:packages/ci-helper",
     "css-loader": "3.4.2",
     "eslint": "6.8.0",
     "eslint-config-airbnb": "18.1.0",

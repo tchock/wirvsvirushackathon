@@ -11,3 +11,5 @@ ignore.*
 .serverless
 .webpack
 .env
+dist
+.terraform
