@@ -79,6 +79,9 @@ resources:
           -
             AttributeName: "GSI_PK_2"
             AttributeType: "S"
+          -
+            AttributeName: "GSI_SK_2"
+            AttributeType: "S"
         KeySchema:
           -
             AttributeName: "PK"
@@ -106,5 +109,8 @@ resources:
               -
                 AttributeName: "GSI_PK_2"
                 KeyType: "HASH"
+              -
+                AttributeName: "GSI_SK_2"
+                KeyType: "RANGE"
         TableName: "${self:custom.config.DB_TABLE_MAIN}"
         BillingMode: PAY_PER_REQUEST

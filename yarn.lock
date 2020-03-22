@@ -2933,6 +2933,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/uuid@npm:7.0.2":
+  version: 7.0.2
+  resolution: "@types/uuid@npm:7.0.2"
+  checksum: 2/2358ec47266a648bf6a2beeb800b9848cb03fa583a5e2e1a5a3c2b3d932551982f6a19bb6360fe91971f2520f0078c8de9621481fcddee727949a237b1085da6
+  languageName: node
+  linkType: hard
+
 "@types/ws@npm:^5.1.1":
   version: 5.1.2
   resolution: "@types/ws@npm:5.1.2"
@@ -3594,6 +3601,7 @@ __metadata:
     "@types/jsonwebtoken": 8.3.8
     "@types/node": ^13.9.2
     "@types/serverless": 1.18.6
+    "@types/uuid": 7.0.2
     "@typescript-eslint/eslint-plugin": 2.24.0
     "@typescript-eslint/eslint-plugin-tslint": 2.24.0
     "@typescript-eslint/parser": 2.24.0
@@ -3627,6 +3635,7 @@ __metadata:
     tslint: 5.20.1
     types: "workspace:packages/types"
     typescript: ^3.8.3
+    uuid: ^7.0.2
     webpack: 4.42.0
     webpack-graphql-loader: 0.1.2
     webpack-merge: 4.2.2
@@ -17211,6 +17220,15 @@ fsevents@^1.2.7:
   bin:
     uuid: ./bin/uuid
   checksum: 2/1ce3f37e214d6d0dc94a6a9663a0365013ace66bc3fd5b203e6f5d2eeb978aaee1192367222386345d30b4c6a447928c501121aa84c637724bf105ef57284949
+  languageName: node
+  linkType: hard
+
+"uuid@npm:^7.0.2":
+  version: 7.0.2
+  resolution: "uuid@npm:7.0.2"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 2/25137594ba74b0ca8bcf582f8c7c2e7556efe621d5cf2459d0c713755cb67c8546768b2d05c62d65a890a44e213551010f169cfa7c6ace4adcdd1bdfab22a627
   languageName: node
   linkType: hard
 
