@@ -9,30 +9,40 @@ import PeopleIcon from "@material-ui/icons/PeopleOutlined";
 import ItemsIcon from "@material-ui/icons/ReceiptOutlined";
 import TypeIcon from "@material-ui/icons/LocalDiningOutlined";
 import { IconListItem } from "../../components/IconListItem";
-import { Box } from "@material-ui/core";
+import { Box, Tabs, Tab } from "@material-ui/core";
 import { useQuery } from "@apollo/react-hooks";
 import { bundles } from "../../data";
 import { GET_BASKET } from "../../queries";
 
-const { default: placeholderHeaderImage } = require("./placeholder_header.png");
-
 export function BundleOverview() {
   const { data, client } = useQuery<any>(GET_BASKET);
+  const [selectedFilter, setSelectedFilter] = React.useState('all');
   
   const basket = data?.basketItems ?? [];
   const selectedShopId = data?.selectedShopId;
 
-  const renderBundles = basket.length ? bundles
+  const filterBundles = selectedFilter === 'all' ? bundles : bundles
+    .filter(bundle => bundle.filterCategory === selectedFilter);
+  
+  const renderBundles = basket.length ? filterBundles
     .filter(bundle => bundle.location.nodeId === selectedShopId)
     .filter(bundle => !basket.find((basketNodeId) => basketNodeId === bundle.nodeId))
-    : bundles;
+    : filterBundles;  
 
   return (
     <>
+     <Box mb={2} bgcolor="background.paper">
+      <Tabs value={selectedFilter} onChange={(_, newValue) => setSelectedFilter(newValue)} variant="fullWidth">
+        <Tab value="all" label="All" />
+        <Tab value="food" label="Food" />
+        <Tab value="non-food" label="Non Food" />
+      </Tabs>
+     </Box>
       {renderBundles.map(bundle => (
         <BundleItem
           key={bundle.nodeId}
           name={bundle.name}
+          bannerImage={bundle.banner}
           peopleCount={bundle.peopleCount}
           category={bundle.category}
           products={bundle.items}
@@ -53,11 +63,10 @@ export function BundleOverview() {
   }
 }
 
-function BundleItem({ name: bundleName, products, location, peopleCount, category, onAddToCart }) {
+function BundleItem({ name: bundleName, bannerImage, products, location, peopleCount, category, onAddToCart }) {
   const price = products.reduce((acc, product) => acc + product.price, 0);
   return (
-    <ContentCard>
-      <ContentCardHeader src={placeholderHeaderImage} />
+    <ContentCard header={<ContentCardHeader src={bannerImage} />}>
       <Typography variant="h5" paragraph>
         {bundleName}
       </Typography>

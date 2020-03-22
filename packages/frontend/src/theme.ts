@@ -4,11 +4,11 @@ import { createMuiTheme, Theme } from "@material-ui/core";
 export const THEME = createMuiTheme({
   palette: {
     primary: {
-      main: "#05c46b",
+      main: "#0BE881",
       contrastText: "#ffffff"
     },
     secondary: {
-      main: "#ffd32a"
+      main: "#FFA801"
     }
   }
 } as Partial<Theme>);
@@ -21,5 +21,5 @@ export const GlobalStyle = createGlobalStyle<{ theme: ThemeConfig }>`
   html, body {
     margin: 0;
     padding: 0;
-    background-color: ${props => props.theme.palette.secondary.main};
+    background-color: #F5F5F5;
   }`;

@@ -1,7 +1,7 @@
 import React from "react";
-import { ContentCard } from "../../../components/ContentCard";
+import { ContentCard } from "../../components/ContentCard";
 import { Typography, Button } from "@material-ui/core";
-import { ButtonRow } from "../../../components/ButtonRow";
+import { ButtonRow } from "../../components/ButtonRow";
 
 export function Confirmation() {
   return (

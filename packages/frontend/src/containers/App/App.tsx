@@ -3,17 +3,15 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction, { BottomNavigationActionProps } from '@material-ui/core/BottomNavigationAction';
 import BasketIcon from '@material-ui/icons/ShoppingCartOutlined';
 import BundleListIcon from '@material-ui/icons/MenuOutlined';
-import { AccountOrderDetails } from '../../account/containers/AccountOrderDetails';
-import { AccountOrdersOverview } from '../../account/containers/AccountOrdersOverview';
-import { Confirmation } from '../../order/containers/Confirmation';
+import { Confirmation } from '../../containers/Confirmation';
 import { BundleOverview } from '../BundleOverview';
 import { Route, Switch, matchPath, Link } from 'react-router-dom';
 import { SvgIconProps, Box, Badge } from '@material-ui/core';
-import { Basket } from '../../order/containers/Basket';
 import styled from 'styled-components';
 import { getSpacing } from '../../theme';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_BASKET } from '../../queries';
+import { Account } from '../../account/containers/Account';
 
 const NAVIGATION = [
   {
@@ -23,9 +21,9 @@ const NAVIGATION = [
     component: BundleOverview,
   },
   {
-    path: '/order/basket',
+    path: '/account',
     icon: BasketIcon,
-    component: Basket,
+    component: Account,
     renderIcon: ({ basketSize }) => (
       <Badge badgeContent={basketSize} color="primary">
         <BasketIcon />
@@ -33,16 +31,8 @@ const NAVIGATION = [
     )
   },
   {
-    path: '/order/confirmation',
+    path: '/order-confirmation',
     component: Confirmation,
-  },
-  {
-    path: '/account/orders',
-    component: AccountOrdersOverview,
-  },
-  {
-    path: '/account/order/:pickUpCode',
-    component: AccountOrderDetails,
   },
 ];
 
@@ -70,7 +60,7 @@ export function App(props) {
 
   return (
     <>
-      <Box p={{ xs: 1, md: 5 }} boxSizing="border-box" minHeight="100vh">
+      <Box boxSizing="border-box" minHeight="100vh">
         <Switch>
           {NAVIGATION.map(navItem => (
             <Route path={navItem.path} exact={navItem.exact} component={navItem.component} />
