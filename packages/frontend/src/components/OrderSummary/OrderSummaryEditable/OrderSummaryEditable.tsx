@@ -102,11 +102,11 @@ export const OrderSummaryEditable = (props: Props) => {
                   <Grid item xs={11}>
                     {item.quantity} {item.unit} {item.name}
                   </Grid>
-                  <Grid item xs={1}>
+                  {/* <Grid item xs={1}>
                     <ButtonIcon onClick={() => console.log("asdasd")}>
                       <HighlightOffOutlinedIcon color="secondary" />
                     </ButtonIcon>
-                  </Grid>
+                  </Grid> */}
                 </Grid>
               </BundleIconListItem>
             ))
