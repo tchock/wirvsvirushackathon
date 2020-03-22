@@ -2,10 +2,8 @@ import * as React from "react";
 import { Route } from "react-router";
 import { Switch } from "react-router-dom";
 import { AcceptedOrdersContainer } from "../AcceptedOrders/AcceptedOrdersContainer";
-import { PendingApprovalOrdersContainer } from "../PendingApprovalOrders/PendingApprovalOrdersContainer";
 import styled from "styled-components";
-import { SingleDenyOrder } from '../PendingApprovalOrders/SingleDenyOrder/SingleDenyOrder';
-import { SingleApproveOrder } from '../PendingApprovalOrders/SingleApproveOrder/SingleApproveOrder';
+import { PendingApprovalOrdersRouter } from "../PendingApprovalOrders/PendingApprovalOrdersRouter";
 
 const AdminContainerWrapper = styled.div``;
 
@@ -16,20 +14,12 @@ export const AdminContainer = (props: Props) => {
       <Switch>
         <Route
           path={"/admin/pending"}
-          exact={true}
-          component={PendingApprovalOrdersContainer}
+          component={PendingApprovalOrdersRouter}
         />
         <Route
-          path={"/admin/pending/:id/approve"}
-          exact={true}
-          component={SingleApproveOrder}
+          path={"/admin"}
+          component={AcceptedOrdersContainer}
         />
-        <Route
-          path={"/admin/pending/:id/deny"}
-          exact={true}
-          component={SingleDenyOrder}
-        />
-        <Route path={"/admin"} component={AcceptedOrdersContainer} />
       </Switch>
     </AdminContainerWrapper>
   );

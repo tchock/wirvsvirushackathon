@@ -12,6 +12,7 @@ import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import InboxIcon from "@material-ui/icons/Inbox";
 import EuroIcon from "@material-ui/icons/Euro";
 import styled from "styled-components";
+import { Order } from "../../../../types/order";
 
 const ListItemStyled = styled<any>(ListItem)`
   padding-bottom: 0;
@@ -19,13 +20,17 @@ const ListItemStyled = styled<any>(ListItem)`
 `;
 
 type Props = {
-  pickUpCode: string;
-  name: string;
-  pickUpTime: string;
-  bundleId: string;
-  price: number;
+  order: Order;
 };
 export const OrderSummary = (props: Props) => {
+  const totalPrice = props.order.bundles.nodes.reduce(
+    (total, bundle) =>
+      bundle.items.nodes.reduce(
+        (bundleTotal, item) => bundleTotal + item.price,
+        0
+      ),
+    0
+  );
   return (
     <List>
       <ListItemStyled>
@@ -34,7 +39,7 @@ export const OrderSummary = (props: Props) => {
             <ConfirmationNumberIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary={props.pickUpCode} secondary="Code" />
+        <ListItemText primary={props.order.pickUpCode} secondary="Code" />
       </ListItemStyled>
       <ListItemStyled>
         <ListItemAvatar>
@@ -42,7 +47,7 @@ export const OrderSummary = (props: Props) => {
             <PersonIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary={props.name} secondary="Name" />
+        <ListItemText primary={props.order.customer.nodeId} secondary="Name" />
       </ListItemStyled>
       <ListItemStyled>
         <ListItemAvatar>
@@ -50,15 +55,29 @@ export const OrderSummary = (props: Props) => {
             <QueryBuilderIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary={props.pickUpTime} secondary="Pickup Time" />
+        <ListItemText
+          primary={
+            props.order.confirmedPickUpTime || props.order.requestedPickUpTime
+          }
+          secondary="Pickup Time"
+        />
       </ListItemStyled>
-      <ListItemStyled>
+      <ListItemStyled alignItems="flex-start">
         <ListItemAvatar>
           <Avatar>
             <InboxIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary={props.bundleId} secondary="Bundle Number" />
+        {props.order.bundles.nodes.map(bundle => {
+          const bundleContents = bundle.items.nodes.map(item => (
+            <>
+              {item.quantity} {item.unit} {item.name} <br />
+            </>
+          ));
+          return (
+            <ListItemText primary={bundle.nodeId} secondary={bundleContents} />
+          );
+        })}
       </ListItemStyled>
       <ListItemStyled>
         <ListItemAvatar>
@@ -66,7 +85,7 @@ export const OrderSummary = (props: Props) => {
             <EuroIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary={props.price} secondary="Price" />
+        <ListItemText primary={totalPrice} secondary="Price" />
       </ListItemStyled>
     </List>
   );
