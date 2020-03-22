@@ -1,12 +1,12 @@
 export type UserInfo = {
-  iss: String;
-  sub: String;
-  aud: String[];
-  iat: Number;
-  exp: Number;
-  azp: String;
-  scope: String;
-  permissions: String[];
+  iss: string;
+  sub: string;
+  aud: string[];
+  iat: number;
+  exp: number;
+  azp: string;
+  scope: string;
+  permissions: string[];
 };
 
 export type ResolverContext = {

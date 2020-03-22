@@ -10,7 +10,7 @@ const typeDef = /* GraphQL */ `
   }
 
   type Mutation {
-    orderPickUp(pickUpCode: String!): Order # order status -> PICKED_UP (by foreign user)
+    # orderPickUp(pickUpCode: String!): Order # order status -> PICKED_UP (by ??)
     orderDecline(nodeId: NodeId!): Order # order status -> REJECTED (by store owner)
     orderAccept(nodeId: NodeId!): Order # order status -> ACCEPTED (by store owner)
     orderPlace(order: OrderInput): Order # creates order (by customer)

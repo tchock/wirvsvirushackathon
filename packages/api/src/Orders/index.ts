@@ -1,3 +1,4 @@
-import * as Order from './controller'
+import * as Order from './controller';
+
 export * from './controller';
-export default Order
+export default Order;
