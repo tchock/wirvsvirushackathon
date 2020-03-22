@@ -45,12 +45,14 @@ export async function createOrder(args: OrderInput, user: UserInfo): Promise<Ord
     bundles: args.bundles,
     customer: {
       nodeId: user.sub,
+      type: Audiences.CUSTOMER,
     },
     orderStatus: OrderStatus.PENDING,
     requestedPickUpTime: args.requestedPickUpTime,
     pickUpCode: createFirstSegmentOfUuid(),
     store: {
       nodeId: args.store,
+      type: Audiences.STORE,
     },
   };
 

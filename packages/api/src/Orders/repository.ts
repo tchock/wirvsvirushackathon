@@ -93,16 +93,16 @@ export async function getOrderByPickUpCode(pickUpCode: string, storeId: string) 
   return documentClient.query(params).promise();
 }
 
-async function getOrderForStore(userId: string, nodeId: string) {
+async function getOrderForStore(nodeId: string, userId: string) {
   const params: AWS.DynamoDB.DocumentClient.GetItemInput = {
     TableName: tableName,
     Key: {
-      PK: userId,
-      SK: nodeId,
+      PK: `storeId_${userId}`,
+      SK: `orderId_${nodeId}`,
     },
   };
   const result = await documentClient.get(params).promise();
-  return result.Item as Order;
+  return result.Item.payload as Order;
 }
 
 async function getOrderForCustomer(nodeId: string, userId: string) {
@@ -136,7 +136,7 @@ async function getOrdersForStore(userId: string, orderStatus?: OrderStatus) {
     await queryOrders<Order>(
       'PK = :userId',
       {
-        ':userId': `userId_${userId}`,
+        ':userId': `storeId_${userId}`,
       },
       null,
       orderStatus

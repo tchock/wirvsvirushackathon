@@ -52,12 +52,12 @@ const typeDef = /* GraphQL */ `
     customer: Customer!
     orderStatus: OrderStatus!
     bundles: BundleList!
-    shareLink: String!
+    shareLink: String
   }
 
   input OrderInput {
     bundles: [BundleInput!]!
-    store: String! # Store nodeId
+    store: NodeId! # Store nodeId
     requestedPickUpTime: String # ISO8601
   }
 
@@ -77,7 +77,8 @@ const typeDef = /* GraphQL */ `
   }
 
   input BundleInput {
-    items: BundleItemInput!
+    nodeId: NodeId!
+    items: [BundleItemInput!]!
   }
 
   type BundleItemList {
@@ -99,8 +100,12 @@ const typeDef = /* GraphQL */ `
   }
 
   input BundleItemInput {
-    nodeId: NodeId!
+    nodeId: NodeId! # NOT any PK + SK
     quantity: Float!
+    # once we handle bundles on the server side we should drop all these for placing an order
+    price: Float!
+    name: String!
+    unit: String!
   }
 
   interface User {
@@ -128,9 +133,14 @@ const resolvers = {
   Mutation: {
     orderPlace: Order.orderPlace,
     orderAccept: Order.orderAccept,
-    orderPickUp: Order.orderPickUp,
+    orderDecline: Order.orderDecline,
   },
-
+  Order: {
+    bundles: asPaginationResolver(parent => parent.bundles),
+  },
+  Bundle: {
+    items: asPaginationResolver(parent => parent.items),
+  },
   NodeId,
 };
 

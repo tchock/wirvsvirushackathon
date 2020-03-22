@@ -1,78 +1,83 @@
 import React from "react";
-import { Typography, Button } from "@material-ui/core";
-import { ButtonRow } from "../../../components/ButtonRow";
+import { Typography, Button, Box } from "@material-ui/core";
 import { ContentCard } from "../../../components/ContentCard";
-
-const fakeOrders = [
-  {
-    pickUpCode: "1234",
-    orderStatus: "PENDING"
-  },
-  {
-    pickUpCode: "Abc123",
-    orderStatus: "ACCEPTED"
-  },
-  {
-    pickUpCode: "xxx",
-    orderStatus: "REJECTED"
-  }
-];
+import { useQuery } from "@apollo/react-hooks";
+import { GET_CUSTOMER_ORDERS } from "../../../services/OrdersService";
+import { CenteredProgress } from "../../../components/CenteredProgress";
+import { FormattedNumber } from "react-intl";
+import { DateListItem } from "../../../components/DateListItem";
 
 export function AccountOrdersOverview() {
+  const { data, loading } = useQuery(GET_CUSTOMER_ORDERS);
+  if (loading) {
+    return <CenteredProgress />
+  }
+
+  const orders = data.orders.nodes;
+
   return (
     <>
-      {fakeOrders.map(fakeOrder => (
-        <OrderItem key={fakeOrder.pickUpCode} order={fakeOrder} />
+      {orders.map(order => (
+        <OrderItem key={order.pickUpCode} order={order} />
       ))}
     </>
   );
 }
 
 function OrderItem({ order }) {
+  const price = getOrderPrice(order);
   return (
-    <ContentCard>
-      <Typography variant="h5">Order: {order.pickUpCode}</Typography>
-      {getOrderItemContent(order)}
+    <ContentCard footer={<Box mt={-2}>
+      {getActionButton(order)}
+    </Box>}>
+      <Typography variant="h5" paragraph>Order {order.pickUpCode}</Typography>
+      <Box display="flex" justifyContent="space-between">
+        <Box flexGrow={1}>
+          {getPickupDate(order)}
+        </Box>
+        <Typography variant="h5">
+          <FormattedNumber value={price} style="currency" currency="EUR" />
+        </Typography>
+      </Box>
     </ContentCard>
   );
 }
 
-function getOrderItemContent(order) {
-  switch (order.orderStatus) {
-    case "ACCEPTED":
-      return <OrderStatusAccepted />;
-    case "REJECTED":
-      return <OrderStatusRejected />;
+function getActionButton(order) {
+  return <Button size="large" variant="contained" color={getStatusColor(order)} fullWidth>{getStatusText(order)}</Button>
+}
+
+function getStatusText(order) {
+  switch(order.orderStatus) {
+    case 'PENDING':
+      return 'To be accepted';
+    case 'REJECTED':
+      return 'Rejected';
+    case 'ACCEPTED':
+      return 'Order accepted';
     default:
-      return <OrderStatusPending />;
+      return order.orderStatus;
   }
 }
 
-function OrderStatusPending() {
-  return <Typography>Still pending</Typography>;
+function getStatusColor(order) {
+  switch(order.orderStatus) {
+    case 'PENDING':
+      case 'REJECTED':
+      return 'secondary';
+    default:
+      return 'primary';
+  }
 }
 
-function OrderStatusAccepted() {
-  return (
-    <>
-      <Typography>The shop accepted your order</Typography>
-      <Typography>Payment methods:</Typography>
-      <Typography>Paypal</Typography>
-      <Typography>Cash</Typography>
-      <ButtonRow>
-        <Button variant="contained" color="primary">
-          Pick up now
-        </Button>
-      </ButtonRow>
-    </>
-  );
+function getOrderPrice(order) {
+  return order.bundles.nodes
+    .reduce((bundleAcc, bundle) => bundle.items.nodes
+      .reduce((itemAcc, item) => itemAcc + item.price, bundleAcc), 0);
 }
 
-function OrderStatusRejected() {
-  return (
-    <>
-      <Typography>We&apos;re sorry, your order has been denied</Typography>
-      <Typography>Reason: Out of products, too many orders</Typography>
-    </>
-  );
+function getPickupDate(order) {
+  const text = order.orderStatus === 'PENDING' ? 'Prefered pick up date' : 'Pick up date';
+  const date = order.orderStatus === 'PENDING' ? order.requestedPickUpTime : order.confirmedPickUpTime;
+  return <DateListItem text={text} date={date} />
 }
