@@ -52,7 +52,7 @@ const typeDef = /* GraphQL */ `
     customer: Customer!
     orderStatus: OrderStatus!
     bundles: BundleList!
-    shareLink: String!
+    shareLink: String
   }
 
   input OrderInput {
@@ -77,7 +77,8 @@ const typeDef = /* GraphQL */ `
   }
 
   input BundleInput {
-    items: BundleItemInput!
+    nodeId: NodeId!
+    items: [BundleItemInput!]!
   }
 
   type BundleItemList {
@@ -132,9 +133,14 @@ const resolvers = {
   Mutation: {
     orderPlace: Order.orderPlace,
     orderAccept: Order.orderAccept,
-    orderPickUp: Order.orderPickUp,
+    orderDecline: Order.orderDecline,
   },
-
+  Order: {
+    bundles: asPaginationResolver(parent => parent.bundles),
+  },
+  Bundle: {
+    items: asPaginationResolver(parent => parent.items),
+  },
   NodeId,
 };
 
