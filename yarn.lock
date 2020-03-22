@@ -1254,6 +1254,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.6.0":
+  version: 7.9.2
+  resolution: "@babel/runtime@npm:7.9.2"
+  dependencies:
+    regenerator-runtime: ^0.13.4
+  checksum: 2/50c65b4972e62ca260ff6f3f99cf2395585d7f7bcd947ee87d082c2926cb4f0c93c815d5e9071162e689a4d2ba4143ffd5b005893be860088689c963f34e50c8
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.7.4, @babel/template@npm:^7.8.3, @babel/template@npm:^7.8.6":
   version: 7.8.6
   resolution: "@babel/template@npm:7.8.6"
@@ -1309,6 +1318,24 @@ __metadata:
   bin:
     watch: cli.js
   checksum: 2/7909f89bbee917b2a5932fd178b48b5291f417293538b1e8e68a5fa5815b3d6d4873c591d965f84559cd3e7b669c42a749ab706ef792368de39b95541ae4627d
+  languageName: node
+  linkType: hard
+
+"@date-io/core@npm:1.x, @date-io/core@npm:^1.0.1":
+  version: 1.3.13
+  resolution: "@date-io/core@npm:1.3.13"
+  checksum: 2/a9bd45041e9a52037121bc90889e93dfd351c25f31f8f547785dff2ddad14baba28b44d3838521db4cfca33b2c4be9651dc6d4c0d472c1860308346fd32f603f
+  languageName: node
+  linkType: hard
+
+"@date-io/date-fns@npm:1.0.1":
+  version: 1.0.1
+  resolution: "@date-io/date-fns@npm:1.0.1"
+  dependencies:
+    "@date-io/core": ^1.0.1
+  peerDependencies:
+    date-fns: 2.0.0-alpha.21
+  checksum: 2/dda17071172e0942558c86e1287f11fe4b1b9f8d9ba4b80bc843d546ed7278a35ce5b4bb06d63c5d0920a19faa798dea90017d243d06aaf8b332b5bfd3b9d89e
   languageName: node
   linkType: hard
 
@@ -1988,6 +2015,47 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 2/110bb77f0758d16ad85b6a91f23fe05bac6790b30b6b1889b0578d7d42050c63c76e2764ec4991bdf342073de43e14ebfc171f1c63296a6dd8d523cc6c07d2bb
+  languageName: node
+  linkType: hard
+
+"@material-ui/lab@npm:^4.0.0-alpha.46":
+  version: 4.0.0-alpha.46
+  resolution: "@material-ui/lab@npm:4.0.0-alpha.46"
+  dependencies:
+    "@babel/runtime": ^7.4.4
+    "@material-ui/utils": ^4.9.6
+    clsx: ^1.0.4
+    prop-types: ^15.7.2
+    react-is: ^16.8.0
+  peerDependencies:
+    "@material-ui/core": ^4.9.0
+    "@types/react": ^16.8.6
+    react: ^16.8.0
+    react-dom: ^16.8.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 2/ee350e67f8342ef1975fcf515261a7b901b8cf3bf5359719675ab8b4f223ea4030ec734dd07f06d4ef3e3193dd9849a46e8e910b6da0a347ed9b5fc4d835a361
+  languageName: node
+  linkType: hard
+
+"@material-ui/pickers@npm:^3.2.10":
+  version: 3.2.10
+  resolution: "@material-ui/pickers@npm:3.2.10"
+  dependencies:
+    "@babel/runtime": ^7.6.0
+    "@date-io/core": 1.x
+    "@types/styled-jsx": ^2.2.8
+    clsx: ^1.0.2
+    react-transition-group: ^4.0.0
+    rifm: ^0.7.0
+  peerDependencies:
+    "@date-io/core": ^1.3.6
+    "@material-ui/core": ^4.0.0
+    prop-types: ^15.6.0
+    react: ^16.8.4
+    react-dom: ^16.8.4
+  checksum: 2/d3486559670a9cd740d8985557c166825a7692a173dc8810c06f3fb225ecad2cf7bd7bcffe3a0ac7c894f89e163abf38f9c4de82d56244419a9d24342f598afa
   languageName: node
   linkType: hard
 
@@ -2850,6 +2918,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-qr-reader@npm:2.1.2":
+  version: 2.1.2
+  resolution: "@types/react-qr-reader@npm:2.1.2"
+  dependencies:
+    "@types/react": "*"
+  checksum: 2/2bbbd319e8d55b57dc7dd1c09fdaf4d302168a435aef39d3359c7d849dd4caf6e3cb4a622624863fb1cd92e96b2835da8cf9d812838a7e5f7261dffbf5537734
+  languageName: node
+  linkType: hard
+
 "@types/react-router-dom@npm:5.1.3":
   version: 5.1.3
   resolution: "@types/react-router-dom@npm:5.1.3"
@@ -2930,6 +3007,15 @@ __metadata:
     "@types/react-native": "*"
     csstype: ^2.2.0
   checksum: 2/95275f489bef0c8863c67a4ac7d48167eda42132a0993dde1bd1a85c1e474efb0b62bd4486e41d1038e3f4fc25310e1a3fd4ab3472eefee933d5b20cf56795fa
+  languageName: node
+  linkType: hard
+
+"@types/styled-jsx@npm:^2.2.8":
+  version: 2.2.8
+  resolution: "@types/styled-jsx@npm:2.2.8"
+  dependencies:
+    "@types/react": "*"
+  checksum: 2/4066e48c71d7d1c10ee77115522830cb11dec621d1555340b03cc2b48c5954c3124a436d5cf59e62f6226cc1704919c828a332fda4a9f997014f2d73c7d33f3f
   languageName: node
   linkType: hard
 
@@ -5507,7 +5593,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:^1.0.2":
+"clsx@npm:^1.0.2, clsx@npm:^1.0.4":
   version: 1.1.0
   resolution: "clsx@npm:1.1.0"
   checksum: 2/aebac019d24b4f40d28490fa31abdb7791d50242d928f27faa3aef44150f410600eb3c64ab6af01c66c3a022313d1c578a3e57c26bd6040bc15d30699824456c
@@ -6209,6 +6295,13 @@ __metadata:
     whatwg-mimetype: ^2.2.0
     whatwg-url: ^7.0.0
   checksum: 2/04d211e1e9f83bab75450487da34b124b32beacd1ad0df96e3a747b705c24c65579833a04a6ea30a528ea5b99d5247660408c513b38905bf855f2de585b9e91c
+  languageName: node
+  linkType: hard
+
+"date-fns@npm:next":
+  version: 2.0.0-beta.5
+  resolution: "date-fns@npm:2.0.0-beta.5"
+  checksum: 2/4dec4ce911b6089f99adc26f68d16cb819d4b2d6f3e92547063b7368383a5b54c5df71064ab2044d551ea63b1ce0e06a7c394c6052341c1fc611c5db91257cbe
   languageName: node
   linkType: hard
 
@@ -8265,13 +8358,17 @@ __metadata:
     "@babel/preset-env": 7.8.7
     "@babel/preset-react": 7.8.3
     "@babel/preset-typescript": 7.8.3
+    "@date-io/date-fns": 1.0.1
     "@material-ui/core": ^4.9.7
     "@material-ui/icons": ^4.9.1
+    "@material-ui/lab": ^4.0.0-alpha.46
+    "@material-ui/pickers": ^3.2.10
     "@material-ui/styles": ^4.9.6
     "@material-ui/system": ^4.9.6
     "@types/qrcode.react": 1.0.0
     "@types/react": 16.9.23
     "@types/react-dom": 16.9.5
+    "@types/react-qr-reader": 2.1.2
     "@types/react-router": 5.1.4
     "@types/react-router-dom": 5.1.3
     "@types/styled-components": 5.0.1
@@ -8282,7 +8379,9 @@ __metadata:
     apollo-link-http: ^1.5.16
     babel-loader: 8.0.6
     babel-plugin-styled-components: ^1.10.7
+    ci-helper: "workspace:packages/ci-helper"
     css-loader: 3.4.2
+    date-fns: next
     eslint: 6.8.0
     eslint-config-airbnb: 18.1.0
     eslint-config-prettier: 6.10.0
@@ -8306,6 +8405,7 @@ __metadata:
     react: ^16.13.0
     react-dom: ^16.13.0
     react-intl: ^4.1.1
+    react-qr-reader: ^2.2.1
     react-router: ^5.1.2
     react-router-dom: ^5.1.2
     source-map-loader: 0.2.4
@@ -11117,6 +11217,13 @@ fsevents@^1.2.7:
     json-schema: 0.2.3
     verror: 1.10.0
   checksum: 2/ee0177b7ef39e6becf18c586d31fabe15d62be88e7867d3aff86466e4a3de9a2cd47b6e597417aebc1cd3c2d43bc662e79ab5eecdadf3ce0643e909432ed6d2c
+  languageName: node
+  linkType: hard
+
+"jsqr@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "jsqr@npm:1.2.0"
+  checksum: 2/fb6236373908ce83bc36795f903c327e880999d43536308343b4b1a628b9858e6c5242fe52e1e87c16d9792acd5ecbde9b44765ebcb61e5425e06144f251571f
   languageName: node
   linkType: hard
 
@@ -14157,6 +14264,20 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"react-qr-reader@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "react-qr-reader@npm:2.2.1"
+  dependencies:
+    jsqr: ^1.2.0
+    prop-types: ^15.7.2
+    webrtc-adapter: ^7.2.1
+  peerDependencies:
+    react: ~16
+    react-dom: ~16
+  checksum: 2/c16fc3e2ebd42738f3d5630562235142019fe79d9ba7c82df600a8982d89d0405b3609770a3d802efc6786baca410e6d715b1e13d9bc392ce35b61c7d0268b9c
+  languageName: node
+  linkType: hard
+
 "react-router-dom@npm:^5.1.2":
   version: 5.1.2
   resolution: "react-router-dom@npm:5.1.2"
@@ -14194,7 +14315,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-transition-group@npm:^4.3.0":
+"react-transition-group@npm:^4.0.0, react-transition-group@npm:^4.3.0":
   version: 4.3.0
   resolution: "react-transition-group@npm:4.3.0"
   dependencies:
@@ -14750,6 +14871,17 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"rifm@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "rifm@npm:0.7.0"
+  dependencies:
+    "@babel/runtime": ^7.3.1
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 2/87e462ce9b412065f225a9022482ee505883cca45897ba423d5148516c874e83f1d2ddc6cfdb2e40833174385300726fe32b621e5918f49b145e6d5ee2edd087
+  languageName: node
+  linkType: hard
+
 "rimraf@npm:2.6.3":
   version: 2.6.3
   resolution: "rimraf@npm:2.6.3"
@@ -14797,6 +14929,15 @@ fsevents@^1.2.7:
   version: 4.8.5
   resolution: "rsvp@npm:4.8.5"
   checksum: 2/eb70274fb392bb5e4f33ce8ebdee411fc8ce813ccf7d1684830c6752ba1b0346f0527107dcd7ce690ba7c1a9f2c731918fcd4ded11f57ed612897527a46c5f44
+  languageName: node
+  linkType: hard
+
+"rtcpeerconnection-shim@npm:^1.2.15":
+  version: 1.2.15
+  resolution: "rtcpeerconnection-shim@npm:1.2.15"
+  dependencies:
+    sdp: ^2.6.0
+  checksum: 2/45eeb1b3d5e4aff0309ec6e3c32fc3c83d4d5e511713cbd1bb317de022a27c73e0597fe893c31f8f10f092d90c64d52cf575f1a869850a859bbef155998f5552
   languageName: node
   linkType: hard
 
@@ -14953,6 +15094,13 @@ fsevents@^1.2.7:
     ajv: ^6.12.0
     ajv-keywords: ^3.4.1
   checksum: 2/f41503bd6025c4ec77b7eacf98bf39799b9240e51e1f16881e71a90a9a39208f6d1489719acc59ae1b47aedcbcc8c66ceb09f23603e09ca6889c2521b2d9078f
+  languageName: node
+  linkType: hard
+
+"sdp@npm:^2.12.0, sdp@npm:^2.6.0":
+  version: 2.12.0
+  resolution: "sdp@npm:2.12.0"
+  checksum: 2/674e4342b211edb9f98cd17dcaa2aa2a71e7c1f9854b801499dabe3bf849194d10d242a8abe28a2291a6516a68973d46199105ef703372c5cd9844995626517f
   languageName: node
   linkType: hard
 
@@ -17541,6 +17689,16 @@ fsevents@^1.2.7:
   bin:
     webpack: bin/webpack.js
   checksum: 2/fd8b6560ce9346f306e010cba47561ce234fd307984ef708a348fd3278d5da10c61ac927e817c53ecb09375b6436583644e0aade0bf581e7dde4b62aca90b22c
+  languageName: node
+  linkType: hard
+
+"webrtc-adapter@npm:^7.2.1":
+  version: 7.5.1
+  resolution: "webrtc-adapter@npm:7.5.1"
+  dependencies:
+    rtcpeerconnection-shim: ^1.2.15
+    sdp: ^2.12.0
+  checksum: 2/11cb8755c0925e238ab3ffe25a8d55e4acf6a6e8cb9b2753599e508fa155caa21efe1be4e2392a5e11b4f10aa6dd50576325bc445914d20aa5b463f434cbfaa7
   languageName: node
   linkType: hard
 

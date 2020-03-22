@@ -3,13 +3,13 @@ function getConfig() {
     case 'prod':
       return {
         buckets: {
-          web_app: 'tbd',
+          web_app: 'prod-outofthebox-webapp',
         },
       };
     case 'dev':
       return {
         buckets: {
-          web_app: 'dev-tbd',
+          web_app: 'dev-outofthebox-webapp',
         },
       };
     default:
