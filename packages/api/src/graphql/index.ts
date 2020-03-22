@@ -129,6 +129,11 @@ const resolvers = {
     orders: asPaginationResolver(Order.orders),
     order: Order.order,
   },
+  Mutation: {
+    orderPlace: Order.orderPlace,
+    orderAccept: Order.orderAccept,
+    orderPickUp: Order.orderPickUp,
+  },
 
   NodeId,
 };
