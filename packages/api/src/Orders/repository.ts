@@ -90,8 +90,6 @@ export async function getOrderByPickUpCode(pickUpCode: string, storeId: string) 
     },
   };
 
-  console.log(params);
-
   const result = (await documentClient.query(params).promise()).Items;
   return result[0].payload as Order;
 }
