@@ -32,3 +32,7 @@ export async function orderAccept(_root, args, context: ResolverContext): Promis
 export async function orderPlace(_root, args, context: ResolverContext): Promise<Order> {
   return createOrder(args.order, context.user);
 }
+
+export async function orderByPickUpCode(_root, args, context: ResolverContext): Promise<Order> {
+  return getOrderByPickUpCode(args, context.user);
+}
