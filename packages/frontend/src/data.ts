@@ -61,10 +61,10 @@ export const bundles = [
     peopleCount: 4,
     items: [
       { nodeId: '11', name: "Oven Chips", unit: "kg", quantity: 1, price: 1.0 },
-      { nodeId: '12', name: "Burger Patties", quantity: 4, price: 2.5 },
-      { nodeId: '13', name: "Burger Buns", quantity: 4, price: 1.0 },
-      { nodeId: '14', name: "Tomatoes", quantity: 2, price: 0.5 },
-      { nodeId: '15', name: "Onions", quantity: 2, price: 0.25 },
+      { nodeId: '12', name: "Burger Patties", unit: "pieces", quantity: 4, price: 2.5 },
+      { nodeId: '13', name: "Burger Buns", unit: "pieces", quantity: 4, price: 1.0 },
+      { nodeId: '14', name: "Tomatoes", unit: "pieces",quantity: 2, price: 0.5 },
+      { nodeId: '15', name: "Onions", unit: "pieces", quantity: 2, price: 0.25 },
       { nodeId: '16', name: "Ketchup", unit: "g", quantity: 350, price: 0.25 },
     ],
     location: {
@@ -85,7 +85,7 @@ export const bundles = [
     peopleCount: 3,
     items: [
       { nodeId: '17', name: "Fresh Milk", unit: "l", quantity: 2, price: 1.0 },
-      { nodeId: '18', name: "500ml strawberry joghurt", quantity: 2, price: 1.0 },
+      { nodeId: '18', name: "500ml strawberry joghurt", unit: "pieces",quantity: 2, price: 1.0 },
       { nodeId: '19', name: "Butter", unit: "g", quantity: 250, price: 2.2 },
       { nodeId: '20', name: "Vanilla Ice Cream", unit: "ml", quantity: 500, price: 2.2 },
     ],
@@ -106,11 +106,11 @@ export const bundles = [
     filterCategory: 'non-food',
     peopleCount: 4,
     items: [
-      { nodeId: '21', name: "bag of liquid soap", unig: "ml", quantity: 750, price: 2.75 },
-      { nodeId: '22', name: "Tube Toothpaste", quantity: 1, price: 0.75 },
-      { nodeId: '23', name: "toothbrushes", quantity: 2, price: 0.5 },
+      { nodeId: '21', name: "bag of liquid soap", unit: "ml", quantity: 750, price: 2.75 },
+      { nodeId: '22', name: "Tube Toothpaste", unit: "pieces",quantity: 1, price: 0.75 },
+      { nodeId: '23', name: "toothbrushes", unit: "pieces",quantity: 2, price: 0.5 },
       { nodeId: '24', name: "liquid detergent", unit: "l", quantity: 2.5, price: 1.5 },
-      { nodeId: '25', name: "Bag of Toilet Paper (yes, we have some)", quantity: 1, price: 2.5 },
+      { nodeId: '25', name: "Bag of Toilet Paper (yes, we have some)",unit: "pieces", quantity: 1, price: 2.5 },
     ],
     location: {
       nodeId: 321,
@@ -129,12 +129,12 @@ export const bundles = [
     banner: breakfastBanner,
     peopleCount: 2,
     items: [
-      { nodeId: '26', name: "cereals with raisins and nuts", unig: "kg", quantity: 1, price: 2.25 },
-      { nodeId: '27', name: "long life milk", unig: "l", quantity: 1, price: 0.75 },
-      { nodeId: '28', name: "Cherry Jam", unig: "ml", quantity: 325, price: 1.50 },
-      { nodeId: '29', name: "Sliced Rye Bread", unig: "g", quantity: 500, price: 2.50 },
-      { nodeId: '30', name: "Nutella", quantity: 1, price: 1.50 },
-      { nodeId: '31', name: "Packages of Toast", quantity: 2, price: 1.75 },
+      { nodeId: '26', name: "cereals with raisins and nuts", unit: "kg", quantity: 1, price: 2.25 },
+      { nodeId: '27', name: "long life milk", unit: "l", quantity: 1, price: 0.75 },
+      { nodeId: '28', name: "Cherry Jam", unit: "ml", quantity: 325, price: 1.50 },
+      { nodeId: '29', name: "Sliced Rye Bread", unit: "g", quantity: 500, price: 2.50 },
+      { nodeId: '30', name: "Nutella", unit: "pieces", quantity: 1, price: 1.50 },
+      { nodeId: '31', name: "Packages of Toast", unit: "pieces", quantity: 2, price: 1.75 },
     ],
     location: {
       nodeId: 321,
