@@ -41,9 +41,9 @@ export async function declineOrder(args, user: UserInfo) {
 
 export async function pickupOrder(args, user: UserInfo) {
   const order = await repository.getOrderByPickUpCode(args.pickUpCode, user.sub);
-  console.log('OHH YES', order);
 
   order.orderStatus = OrderStatus.PICKED_UP;
+
   return repository.upsertOrder(order);
 }
 
