@@ -1,8 +1,7 @@
 import * as React from "react";
-import { GET_ORDER } from "../../../services/OrdersService";
+import { GET_ORDER_BY_QR_CODE } from "../../../services/OrdersService";
 import { useQuery } from "@apollo/react-hooks";
 import { Button, Grid, Modal } from "@material-ui/core";
-import { OrderSummary } from "../../../components/OrderSummary/OrderSummary";
 import { Order } from "../../../../../types/order";
 import Paper from "@material-ui/core/Paper";
 import styled from "styled-components";
@@ -22,11 +21,11 @@ const SummaryWrapper = styled(Paper)`
 `;
 
 type Props = {
-  orderId: string;
+  qrCode: string;
 };
 export const OrderModalSummary = (props: Props) => {
-  const { loading, error, data } = useQuery(GET_ORDER, {
-    variables: { nodeId: props.orderId }
+  const { loading, error, data } = useQuery(GET_ORDER_BY_QR_CODE, {
+    variables: { pickUpCode: props.qrCode }
   });
 
   if (loading || error) return null;

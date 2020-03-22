@@ -27,36 +27,6 @@ export const GET_CUSTOMER_ORDERS = gql`
   }
 `;
 
-export const GET_ACCEPTED_ORDERS = gql`
-  query {
-    orders(audience: STORE) {
-      nodes {
-        nodeId
-        customer {
-          nodeId
-        }
-        bundles {
-          nodes {
-            nodeId
-            items {
-              nodes {
-                quantity
-                price
-                name
-                unit
-              }
-            }
-          }
-        }
-        pickUpCode
-        orderStatus
-        confirmedPickUpTime
-        requestedPickUpTime
-      }
-    }
-  }
-`;
-
 export const GET_ORDER = gql`
   query($nodeId: NodeId!) {
     order(audience: STORE, nodeId: $nodeId) {
@@ -81,36 +51,6 @@ export const GET_ORDER = gql`
       orderStatus
       confirmedPickUpTime
       requestedPickUpTime
-    }
-  }
-`;
-
-export const getPendingOrder = () => gql`
-  query {
-    orders(audience: STORE) {
-      nodes {
-        nodeId
-        customer {
-          nodeId
-        }
-        bundles {
-          nodes {
-            nodeId
-            items {
-              nodes {
-                quantity
-                price
-                name
-                unit
-              }
-            }
-          }
-        }
-        pickUpCode
-        orderStatus
-        confirmedPickUpTime
-        requestedPickUpTime
-      }
     }
   }
 `;
@@ -143,6 +83,62 @@ const orderFragment = `
     }
   }
   shareLink
+`;
+
+export const GET_ORDER_BY_QR_CODE = gql`
+  query {
+    orders(audience: STORE, orderStatus: ACCEPTED) {
+      nodes (filter: {pickUpCode: "884d0801"}){
+        nodeId
+        pickUpCode
+        confirmedPickUpTime
+        requestedPickUpTime
+        store {
+          nodeId
+          type
+        }
+        customer {
+          nodeId
+          type
+        }
+        orderStatus
+        bundles {
+          nodes {
+            nodeId
+            items {
+              nodes {
+                quantity
+                price
+                name
+                unit
+              }
+            }
+          }
+        }
+        shareLink
+      }
+    }
+  }
+`;
+
+export const GET_ACCEPTED_ORDERS = gql`
+  query {
+      orders(audience: STORE, orderStatus: ACCEPTED) {
+          nodes {
+              ${orderFragment}
+          }
+      }
+  }
+`;
+
+export const GET_PENDING_ORDERS = gql`
+  query {
+    orders(audience: STORE, orderStatus: PENDING) {
+      nodes {
+        ${orderFragment}
+      }
+    }
+  }
 `;
 
 export const PLACE_ORDER = gql`

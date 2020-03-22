@@ -8,6 +8,7 @@ import { Order } from "../../../types/order";
 const OrderCardWrapper = styled(Paper)`
   padding: ${getSpacing(2)}px;
   margin: ${getSpacing(2)}px 0;
+  border-top: 2px solid ${props => props.theme.palette.primary.main};
 `;
 
 const ActionsGrid = styled(Grid)`
@@ -23,7 +24,7 @@ export const OrderSummaryWithActions = ({
   ...props
 }: { children: any } & Props) => {
   return (
-    <OrderCardWrapper elevation={0}>
+    <OrderCardWrapper elevation={2}>
       <OrderSummary order={props.order} isEditMode={props.isEditMode}/>
       <ActionsGrid container spacing={2}>
         {children}

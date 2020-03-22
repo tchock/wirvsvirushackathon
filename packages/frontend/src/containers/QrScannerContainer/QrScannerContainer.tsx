@@ -11,14 +11,17 @@ type Props = {
 const QrContainer = styled.div`
   margin: 0 -${getSpacing(2)}px;
 `;
-export const PickUpOrderContainer = (props: Props) => {
+export const QrScannerContainer = (props: Props) => {
   const orderId = props.match.params.id;
-  const [showModal, setShowModal] = React.useState(false);
+  const [qrCode, setQrCode] = React.useState("884d0801");
+
+  // 884d0801
 
   const handleError = error => console.log(error);
   const handleScan = data => {
     if (data) {
-      setShowModal(true);
+      console.log(data);
+      setQrCode(data);
     }
   };
 
@@ -32,7 +35,7 @@ export const PickUpOrderContainer = (props: Props) => {
           style={{ width: "100%" }}
         />
       </QrContainer>
-      {showModal ? <OrderModalSummary orderId={orderId} /> : null}
+      {qrCode ? <OrderModalSummary qrCode={qrCode} /> : null}
     </>
   );
 };
