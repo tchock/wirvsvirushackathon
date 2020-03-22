@@ -58,8 +58,8 @@ export const GET_ACCEPTED_ORDERS = gql`
 `;
 
 export const GET_ORDER = gql`
-  query($nodeId: NodeId!) {
-    order(nodeId: $nodeId) {
+  query($nodeId: NodeId!, $audience: Audiences!) {
+    order(nodeId: $nodeId, audience: $audience) {
       nodeId
       customer {
         nodeId
