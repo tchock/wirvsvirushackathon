@@ -28,6 +28,7 @@ export const OrderSummaryEditable = (props: Props) => {
 
   return (
     <OrderSummaryWrapper>
+      Edit
       <Typography paragraph variant="h5">
         Order# {props.order.pickUpCode}
       </Typography>

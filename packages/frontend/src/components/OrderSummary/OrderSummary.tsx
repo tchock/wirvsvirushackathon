@@ -7,7 +7,8 @@ import { getSpacing } from "../../theme";
 import { FormattedNumber } from "react-intl";
 import { IconListItem } from "../IconListItem";
 import { OrderSummaryEditable } from "./OrderSummaryEditable/OrderSummaryEditable";
-import { getOrderTotalPrice } from '../../utils';
+import { getOrderTotalPrice } from "../../utils";
+import { PacketIcon } from "../Icons/PacketIcon";
 
 const OrderSummaryWrapper = styled.div``;
 
@@ -19,6 +20,10 @@ const PriceGrid = styled(Grid)`
 
 const ListTitle = styled.div`
   padding-left: ${getSpacing(4)}px;
+`;
+
+const BundleIconListItem = styled(IconListItem)`
+  margin-bottom: 0;
 `;
 
 type Props = {
@@ -48,9 +53,9 @@ export const OrderSummary = (props: Props) => {
         <Grid xs={6} item>
           {props.order.bundles.nodes.map(bundle =>
             bundle.items.nodes.map(item => (
-              <IconListItem icon={QueryBuilderIcon}>
+              <BundleIconListItem icon={PacketIcon}>
                 {item.quantity} {item.unit} {item.name}
-              </IconListItem>
+              </BundleIconListItem>
             ))
           )}
         </Grid>
