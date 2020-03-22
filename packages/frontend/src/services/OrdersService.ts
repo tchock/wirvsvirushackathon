@@ -134,7 +134,6 @@ const orderFragment = `
       nodeId
       items {
         nodes {
-          nodeId
           quantity
           price
           name
