@@ -1,5 +1,32 @@
 import { gql } from "apollo-boost";
 
+export const GET_CUSTOMER_ORDERS = gql`
+  query {
+    orders(audience: CUSTOMER) {
+      nodes {
+        nodeId
+        bundles {
+          nodes {
+            nodeId
+            items {
+              nodes {
+                quantity
+                price
+                name
+                unit
+              }
+            }
+          }
+        }
+        pickUpCode
+        orderStatus
+        confirmedPickUpTime
+        requestedPickUpTime
+      }
+    }
+  }
+`;
+
 export const GET_ACCEPTED_ORDERS = gql`
   query {
     orders(audience: STORE) {

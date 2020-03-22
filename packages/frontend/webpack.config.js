@@ -25,7 +25,7 @@ module.exports = {
         loader: "babel-loader"
       },
       {
-        test: /\.png$/,
+        test: /\.svg$/,
         include: [path.resolve(__dirname, "src")],
         loader: "file-loader"
       },
