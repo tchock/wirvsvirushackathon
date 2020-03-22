@@ -45,7 +45,7 @@ const typeDef = /* GraphQL */ `
 
   type Order implements Node {
     nodeId: NodeId!
-    pickUpCode: String!
+    pickUpCode: String
     confirmedPickUpTime: String # ISO8601
     requestedPickUpTime: String # ISO8601
     store: Store!

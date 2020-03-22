@@ -67,7 +67,7 @@ scalar NodeId
 
 type Order implements Node {
   nodeId: NodeId!
-  pickUpCode: String!
+  pickUpCode: String
   confirmedPickUpTime: String
   requestedPickUpTime: String
   store: Store!
