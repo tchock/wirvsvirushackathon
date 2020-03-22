@@ -1,26 +1,52 @@
 import * as React from "react";
-import { Route } from "react-router";
+import { Route, withRouter } from "react-router";
 import { Switch } from "react-router-dom";
-import { AcceptedOrdersContainer } from "../AcceptedOrders/AcceptedOrdersContainer";
+import AcceptedOrdersContainer from "../AcceptedOrders/AcceptedOrdersContainer";
 import styled from "styled-components";
-import { PendingApprovalOrdersRouter } from "../PendingApprovalOrders/PendingApprovalOrdersRouter";
+import { AppBar, Tab, Tabs } from "@material-ui/core";
+import { ReadyOrdersContainer } from "../ReadyOrdersContainer/ReadyOrdersContainer";
+import { PendingApprovalOrdersContainer } from "../PendingApprovalOrders/PendingApprovalOrdersContainer";
+import { getSpacing } from "../../theme";
+import { PickUpOrderContainer } from "../PickUpOrderContainer/PickUpOrderContainer";
 
 const AdminContainerWrapper = styled.div``;
 
-type Props = {};
-export const AdminContainer = (props: Props) => {
+const ContentContainer = styled.div`
+  padding: 0 ${getSpacing(2)}px;
+`;
+
+type Props = {
+  history: any;
+  location: any;
+};
+const AdminContainer = (props: Props) => {
+  const handleChange = (event, value) => props.history.push(value);
+
   return (
     <AdminContainerWrapper>
-      <Switch>
-        <Route
-          path={"/admin/pending"}
-          component={PendingApprovalOrdersRouter}
-        />
-        <Route
-          path={"/admin"}
-          component={AcceptedOrdersContainer}
-        />
-      </Switch>
+      <AppBar position="static">
+        <Tabs
+          value={props.location.pathname}
+          onChange={handleChange}
+          aria-label="Top Navigation"
+          variant="fullWidth"
+          color="default"
+        >
+          <Tab label="New" value="/admin" />
+          <Tab label="Accepted" value="/admin/accepted" />
+          <Tab label="Ready" value="/admin/ready" />
+        </Tabs>
+      </AppBar>
+      <ContentContainer>
+        <Switch>
+          <Route path="/admin/accepted" component={AcceptedOrdersContainer} />
+          <Route path="/admin/ready" component={ReadyOrdersContainer} />
+          <Route path="/admin/pickup/:id" component={PickUpOrderContainer} />
+          <Route path="/admin" component={PendingApprovalOrdersContainer} />
+        </Switch>
+      </ContentContainer>
     </AdminContainerWrapper>
   );
 };
+
+export default withRouter(AdminContainer);

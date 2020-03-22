@@ -1,92 +1,74 @@
 import * as React from "react";
-import {
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Avatar
-} from "@material-ui/core";
-import ConfirmationNumberIcon from "@material-ui/icons/ConfirmationNumber";
-import PersonIcon from "@material-ui/icons/Person";
+import { Typography, Grid } from "@material-ui/core";
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
-import InboxIcon from "@material-ui/icons/Inbox";
-import EuroIcon from "@material-ui/icons/Euro";
 import styled from "styled-components";
 import { Order } from "../../../../types/order";
+import { getSpacing } from "../../theme";
+import { FormattedNumber } from "react-intl";
+import { IconListItem } from "../IconListItem";
+import { OrderSummaryEditable } from "./OrderSummaryEditable/OrderSummaryEditable";
+import { getOrderTotalPrice } from "../../utils";
+import { PacketIcon } from "../Icons/PacketIcon";
 
-const ListItemStyled = styled<any>(ListItem)`
-  padding-bottom: 0;
-  padding-top: 0;
+export const OrderSummaryWrapper = styled.div``;
+
+export const PriceGrid = styled(Grid)`
+  margin-top: auto;
+  margin-right: auto;
+  text-align: right;
+`;
+
+export const ListTitle = styled.div`
+  padding-left: ${getSpacing(4)}px;
+`;
+
+export const BundleIconListItem = styled(IconListItem)`
+  margin-bottom: 0;
 `;
 
 type Props = {
   order: Order;
+  isEditMode?: boolean;
 };
 export const OrderSummary = (props: Props) => {
-  const totalPrice = props.order.bundles.nodes.reduce(
-    (total, bundle) =>
-      bundle.items.nodes.reduce(
-        (bundleTotal, item) => bundleTotal + item.price,
-        0
-      ),
-    0
-  );
-  return (
-    <List>
-      <ListItemStyled>
-        <ListItemAvatar>
-          <Avatar>
-            <ConfirmationNumberIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary={props.order.pickUpCode} secondary="Code" />
-      </ListItemStyled>
-      <ListItemStyled>
-        <ListItemAvatar>
-          <Avatar>
-            <PersonIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary={props.order.customer.nodeId} secondary="Name" />
-      </ListItemStyled>
-      <ListItemStyled>
-        <ListItemAvatar>
-          <Avatar>
-            <QueryBuilderIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          primary={
-            props.order.confirmedPickUpTime || props.order.requestedPickUpTime
-          }
-          secondary="Pickup Time"
-        />
-      </ListItemStyled>
-      <ListItemStyled alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar>
-            <InboxIcon />
-          </Avatar>
-        </ListItemAvatar>
-        {props.order.bundles.nodes.map(bundle => {
-          const bundleContents = bundle.items.nodes.map(item => (
-            <>
-              {item.quantity} {item.unit} {item.name} <br />
-            </>
-          ));
-          return (
-            <ListItemText primary={bundle.nodeId} secondary={bundleContents} />
-          );
-        })}
-      </ListItemStyled>
-      <ListItemStyled>
-        <ListItemAvatar>
-          <Avatar>
-            <EuroIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary={totalPrice} secondary="Price" />
-      </ListItemStyled>
-    </List>
+  const totalPrice = getOrderTotalPrice(props.order);
+
+  return props.isEditMode ? (
+    <OrderSummaryEditable order={props.order} />
+  ) : (
+    <OrderSummaryWrapper>
+      <Typography paragraph variant="h5">
+        Order# {props.order.nodeId}
+      </Typography>
+      <ListTitle>
+        <Typography color="textSecondary">Pick up date:</Typography>
+      </ListTitle>
+      <IconListItem icon={QueryBuilderIcon}>
+        {props.order.confirmedPickUpTime || props.order.requestedPickUpTime}
+      </IconListItem>
+      <ListTitle>
+        <Typography color="textSecondary">Boxes Includes:</Typography>
+      </ListTitle>
+      <Grid container>
+        <Grid xs={6} item>
+          {props.order.bundles.nodes.map(bundle =>
+            bundle.items.nodes.map(item => (
+              <BundleIconListItem icon={PacketIcon}>
+                {item.quantity} {item.unit} {item.name}
+              </BundleIconListItem>
+            ))
+          )}
+        </Grid>
+        <PriceGrid xs={6} item>
+          <Typography variant="h5">
+            <FormattedNumber
+              value={totalPrice}
+              style="currency"
+              currency="EUR"
+            />
+          </Typography>
+        </PriceGrid>
+      </Grid>
+    </OrderSummaryWrapper>
   );
 };

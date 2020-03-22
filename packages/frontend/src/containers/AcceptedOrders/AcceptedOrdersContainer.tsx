@@ -1,48 +1,37 @@
 import * as React from "react";
 import { SingleAcceptedOrder } from "./SingleAcceptedOrder/SingleAcceptedOrder";
-import { Link } from "react-router-dom";
-import { Button } from "@material-ui/core";
-import { TopNavigation } from "../../components/TopAdminNavigation/TopAdminNavigation";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import {
   GET_ACCEPTED_ORDERS,
   PICK_UP_ORDER
 } from "../../services/OrdersService";
 import { Order } from "../../../../types/order";
+import { withRouter } from "react-router";
 
-type Props = {};
-
-export const AcceptedOrdersContainer = (props: Props) => {
+type Props = {
+  history: any;
+};
+// /admin/pickup/:id
+const AcceptedOrdersContainer = (props: Props) => {
   const { loading, error, data } = useQuery(GET_ACCEPTED_ORDERS);
   const [onPickUpOrder] = useMutation(PICK_UP_ORDER);
 
-  if (loading) return null;
+  // onPickUpOrder({
+  //   variables: { pickUpCode: order.pickUpCode }
+  // })
+
+  if (loading || error) return null;
 
   const orders: Order[] = data.orders.nodes;
 
-  return (
-    <>
-      <TopNavigation>
-        <Link
-          to="/admin/pending"
-          component={Button}
-          fullWidth={true}
-          variant="contained"
-          color="default"
-        >
-          Pending Approval Orders
-        </Link>
-      </TopNavigation>
-      {orders.map(order => (
-        <SingleAcceptedOrder
-          order={order}
-          onPickedUpConfirmed={() =>
-            onPickUpOrder({
-              variables: { pickUpCode: order.pickUpCode }
-            })
-          }
-        />
-      ))}
-    </>
-  );
+  return orders.map(order => (
+    <SingleAcceptedOrder
+      order={order}
+      onPickedUpConfirmed={() =>
+        props.history.push(`/admin/pickup/${order.nodeId}`)
+      }
+    />
+  ));
 };
+
+export default withRouter(AcceptedOrdersContainer);
