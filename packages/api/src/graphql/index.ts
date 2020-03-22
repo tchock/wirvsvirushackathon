@@ -57,7 +57,7 @@ const typeDef = /* GraphQL */ `
 
   input OrderInput {
     bundles: [BundleInput!]!
-    store: String! # Store nodeId
+    store: NodeId! # Store nodeId
     requestedPickUpTime: String # ISO8601
   }
 
