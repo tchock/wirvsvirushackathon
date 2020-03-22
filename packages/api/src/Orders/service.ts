@@ -39,6 +39,14 @@ export async function declineOrder(args, user: UserInfo) {
   return repository.upsertOrder(order);
 }
 
+export async function pickupOrder(args, user: UserInfo) {
+  const order = await repository.getOrderByPickUpCode(args.pickUpCode, user.sub);
+
+  order.orderStatus = OrderStatus.PICKED_UP;
+
+  return repository.upsertOrder(order);
+}
+
 export async function createOrder(args: OrderInput, user: UserInfo): Promise<Order> {
   const order: Order = {
     nodeId: uuid.v4(),
