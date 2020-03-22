@@ -43,6 +43,7 @@ export async function pickupOrder(args, user: UserInfo) {
   const order = await repository.getOrderByPickUpCode(args.pickUpCode, user.sub);
 
   order.orderStatus = OrderStatus.PICKED_UP;
+  order.pickUpCode = null;
 
   return repository.upsertOrder(order);
 }
