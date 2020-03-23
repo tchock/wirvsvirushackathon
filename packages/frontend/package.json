@@ -78,7 +78,7 @@
     "webpack": "4.42.0",
     "webpack-bundle-analyzer": "3.6.1",
     "webpack-cli": "3.3.11",
-    "webpack-dev-server": "2.11.5",
+    "webpack-dev-server": "3.10.3",
     "webpack-graphql-loader": "0.1.2",
     "webpack-merge": "4.2.2"
   },
